@@ -26,7 +26,7 @@ class CreateDeadlineController extends Controller
         $deadline->userId = Auth::id();
         $deadline->name = $request->input_deadline_name;
         $deadline->end_date = $request->input_date;
-        $deadline->end_hour = $request->input_date;
+        $deadline->end_hour = $request->input_time;
         $deadline->subjectId = $request->input_subject;
         $deadline->priority = $request->input_priority;
         $deadline->save();
