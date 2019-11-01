@@ -14,6 +14,6 @@ class DeadlineController extends Controller
     public function index(Request $request){
         return view('deadlines', ['deadlines' => Deadline::where('userId', Auth::id())->get(), 'id'=>Auth::id()]);
     }
-
+    
 
 }

@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
             <table class="table table-hover">
-                <thead class="thead-dark">
+                <thead>
                     <th>Nombre</th>
                     <th>Asignatura</th>
                     <th>Fecha límite</th>
@@ -25,7 +25,8 @@
                     <td> {{ App\Subject::where('id', $deadline->subjectId)->first()->name }} </td>
                     <td> {{ $deadline->end_date }} </td>
                     <td> {{ $deadline->end_hour}}
-                    <td> {{ $deadline->priority}} </td>
+                    <td> {{ $deadline->priority == 'low' ? 'Baja' :
+                            ($deadline->priority == 'medium' ? 'Mediana' : 'Alta')}} </td>
                 </tr>
                 @endforeach
                 </tbody>

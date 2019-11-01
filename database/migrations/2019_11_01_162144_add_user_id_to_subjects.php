@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddEndHourToDeadlines extends Migration
+class AddUserIdToSubjects extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddEndHourToDeadlines extends Migration
      */
     public function up()
     {
-        Schema::table('deadlines', function (Blueprint $table) {
-            $table->string('end_hour', 10);
+        Schema::table('subjects', function (Blueprint $table) {
+            $table->string('userId');
         });
     }
 
@@ -25,8 +25,8 @@ class AddEndHourToDeadlines extends Migration
      */
     public function down()
     {
-        Schema::table('deadlines', function (Blueprint $table) {
-            $table->dropColumn('end_hour');
+        Schema::table('subjects', function (Blueprint $table) {
+            $table->dropColumn('userId');
         });
     }
 }
