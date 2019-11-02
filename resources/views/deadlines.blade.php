@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="card">
@@ -11,22 +10,38 @@
         </div>
         <div class="card-body">
             <table class="table table-hover">
-                <thead>
+                <thead >
                     <th>Nombre</th>
                     <th>Asignatura</th>
-                    <th>Fecha límite</th>
-                    <th>Hora límite</th>
-                    <th>Prioridad</th>
+                    <th style="text-align:center;">Fecha límite</th>
+                    <th style="text-align:center;">Hora límite</th>
+                    <th style="text-align:center;">Prioridad</th>
+                    <th style="text-align:center;">Acción</th>
                 </thead>
                 <tbody>
                 @foreach($deadlines as $deadline)
                 <tr>
                     <td> {{ $deadline->name }} </td>
                     <td> {{ App\Subject::where('id', $deadline->subjectId)->first()->name }} </td>
-                    <td> {{ $deadline->end_date }} </td>
-                    <td> {{ $deadline->end_hour}}
-                    <td> {{ $deadline->priority == 'low' ? 'Baja' :
+                    <td style="text-align:center;"> {{ $deadline->end_date }} </td>
+                    <td style="text-align:center;"> {{ $deadline->end_hour}}
+                    <td style="text-align:center;" width="5%"> {{ $deadline->priority == 'low' ? 'Baja' :
                             ($deadline->priority == 'medium' ? 'Mediana' : 'Alta')}} </td>
+                    <td width="10%">
+                        <button class="btn btn-sm btn-outline-danger" type="button"
+                            onclick="confirm('¿De verdad quieres eliminar esta actividad?') ? document.getElementById('delete-{{$deadline->id}}').submit() : false;">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" type="button">
+                            <i class="fa fa-pen"></i>
+                        </button>
+                        <form id="delete-{{$deadline->id}}" 
+                            action="{{route('deadlines.delete', $deadline->id)}}" 
+                            method="POST">
+                            @method('delete')
+                            @csrf
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>

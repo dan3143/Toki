@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container justify-content-center">
-    <div class="card mx-auto" style="width: 50rem;">
+    <div class="card mx-auto w-75">
         <div class="card-header">
             <span class="align-self-center">Crear una tarea</span>
         </div>
@@ -69,6 +69,7 @@
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Crear">
+                    <a class="text-danger" style="margin-left: 15px;font-size:15px;" href="{{route('deadlines')}}">Cancelar</a>
                 </div>
             </form>
 
