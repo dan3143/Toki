@@ -11,12 +11,14 @@
         <div class="card-body">
             <table class="table table-hover">
                 <thead >
-                    <th>Nombre</th>
-                    <th>Asignatura</th>
-                    <th style="text-align:center;">Fecha límite</th>
-                    <th style="text-align:center;">Hora límite</th>
-                    <th style="text-align:center;">Prioridad</th>
-                    <th style="text-align:center;">Acción</th>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Asignatura</th>
+                        <th style="text-align:center;">Fecha límite</th>
+                        <th style="text-align:center;">Hora límite</th>
+                        <th style="text-align:center;">Prioridad</th>
+                        <th style="text-align:center;">Acción</th>
+                    </tr>
                 </thead>
                 <tbody>
                 @foreach($deadlines as $deadline)
@@ -44,9 +46,8 @@
                     </td>
                 </tr>
                 @endforeach
-                </tbody>
-                
-            <table>
+                </tbody>  
+            </table>
         </div>
     </div>
 </div>
