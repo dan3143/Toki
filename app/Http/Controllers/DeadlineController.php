@@ -36,13 +36,29 @@ class DeadlineController extends Controller
         $deadline->priority = $request->input_priority;
         $deadline->save();
         return redirect()->route('deadlines');
-        //return $request;
     }
 
     public function delete($id){
-        Deadline::where('id', $id)->delete();
+        Deadline::findOrFail($id)->delete();
         return redirect()->route('deadlines');
     }
+
+    public function edit($id){
+        $deadline = Deadline::findOrFail($id);
+        return view('edit_deadline', ['deadline' => $deadline, "subjects" => Subject::where('userId', Auth::id())->get()]);
+    }
+
+    public function update(Request $request, $id){
+        $deadline = Deadline::findOrFail($id);
+        $deadline->name = $request->input_deadline_name;
+        $deadline->end_date = $request->input_date;
+        $deadline->end_hour = $request->input_time;
+        $deadline->subjectId = $request->input_subject;
+        $deadline->priority = $request->input_priority;
+        $deadline->save();
+        return redirect()->route('deadlines');
+    }
+
     
 
 }
