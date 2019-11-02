@@ -15,16 +15,22 @@ class CreateClassesTable extends Migration
     {
         Schema::create('classes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('userId');
+            $table->string('userId');
             $table->string('name');
             $table->json('days');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('start_hour');
-            $table->string('end_hour');
+            $table->time('start_hour');
+            $table->time('end_hour');
             $table->string('place');
-            $table->bigInteger('subjectId');
+            $table->bigInteger('subjectId')->unsigned();
             $table->timestamps();
+            $table->foreign('userId')
+                  ->references('username')->on('users')
+                  ->onDelete('cascade');  
+            $table->foreign('subjectId')
+                  ->references('id')->on('subjects')
+                  ->onDelete('cascade');                  
         });
     }
 

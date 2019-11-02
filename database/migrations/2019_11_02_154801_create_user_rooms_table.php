@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventsTable extends Migration
+class CreateUserRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,14 @@ class CreateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('user_rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('userId');
             $table->string('name');
-            $table->date('date');
-            $table->time('start_hour');
-            $table->time('end_hour');
-            $table->string('place');
+            $table->string('location');
+            $table->boolean('is_available');
+            $table->integer('max_capacity');
+            $table->integer('current_capacity');
             $table->timestamps();
-            $table->foreign('userId')
-                  ->references('username')->on('users')
-                  ->onDelete('cascade'); 
         });
     }
 
@@ -35,6 +31,6 @@ class CreateEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('user_rooms');
     }
 }

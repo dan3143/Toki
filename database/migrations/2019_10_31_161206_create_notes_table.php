@@ -15,11 +15,17 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('userId');
-            $table->bigInteger('subjectId');
+            $table->string('userId');
+            $table->bigInteger('subjectId')->unsigned();
             $table->double('value');
             $table->double('percentage');
             $table->timestamps();
+            $table->foreign('userId')
+                  ->references('username')->on('users')
+                  ->onDelete('cascade');
+            $table->foreign('subjectId')
+                  ->references('id')->on('subjects')
+                  ->onDelete('cascade');
         });
     }
 

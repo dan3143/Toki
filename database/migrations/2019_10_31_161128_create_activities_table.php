@@ -15,13 +15,15 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('userId');
+            $table->string('userId');
             $table->string('name');
             $table->json('days');
-            $table->string('start_hour');
-            $table->string('end_hour');
+            $table->time('start_hour');
             $table->string('place');
             $table->timestamps();
+            $table->foreign('userId')
+                  ->references('username')->on('users')
+                  ->onDelete('cascade');  
         });
     }
 

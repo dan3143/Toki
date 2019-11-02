@@ -32,7 +32,7 @@
                     <a href="{{ route('schedule') }}" onclick="closeNav()">Horario</a>
                     <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
                     <a href="#" onclick="closeNav()">Disponibilidad de salas</a>
-                    <a href="#" onclick="closeNav()"e>Notas</a>
+                    <a href="#" onclick="closeNav()">Notas</a>
                     <a href="#" onclick="closeNav()">Asignaturas</a>
                 </div>
                 <a class="btn" type="button" onclick="openNav()">

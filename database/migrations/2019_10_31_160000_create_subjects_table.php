@@ -15,12 +15,16 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('userId');
             $table->string('name');
             $table->string('teacherName');
             $table->enum('status', ['studying', 'finished', 'retired']);
             $table->integer('absenceNumber');
             $table->integer('absenceMax');
             $table->timestamps();
+            $table->foreign('userId')
+                  ->references('username')->on('users')
+                  ->onDelete('cascade');
         });
     }
 
