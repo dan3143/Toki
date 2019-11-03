@@ -27,22 +27,24 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <div id="sidenav" class="sidenav">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                    <a href="{{ route('schedule') }}" onclick="closeNav()">Horario</a>
-                    <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
-                    <a href="#" onclick="closeNav()">Disponibilidad de salas</a>
-                    <a href="#" onclick="closeNav()">Notas</a>
-                    <a href="{{ route('subjects') }}" onclick="closeNav()">Asignaturas</a>
-                </div>
-                <a class="navbar-brand" type="button" onclick="openNav()">
-                    <i class="fa fa-bars"></i>
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
+                @guest
+                @else
+                    <div id="sidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="{{ route('schedule') }}" onclick="closeNav()">Horario</a>
+                        <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
+                        <a href="#" onclick="closeNav()">Disponibilidad de salas</a>
+                        <a href="#" onclick="closeNav()">Notas</a>
+                        <a href="{{ route('subjects') }}" onclick="closeNav()">Asignaturas</a>
+                    </div>
+                    <a class="navbar-brand" type="button" onclick="openNav()">
+                        <i class="fa fa-bars"></i>
+                        <img src="toki.png" alt="Toki" width="15%" height="15%">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                @endguest
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">

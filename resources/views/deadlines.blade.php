@@ -30,10 +30,10 @@
                         <span id="remaining"></span>
                         <script>remainingDays('{{$deadline->end_date}}' + ' ' +  '{{$deadline->end_hour}}');</script>
                      </td>
-                    <td style="text-align:center;"> {{ $deadline->end_hour}}
+                    <td style="text-align:center;"> {{ $deadline->end_hour}}</td>
                     <td style="text-align:center;" width="5%"> {{ $deadline->priority == 'low' ? 'Baja' :
                             ($deadline->priority == 'medium' ? 'Mediana' : 'Alta')}} </td>
-                    <td width="10%">
+                    <td width="10%" style="text-align:center;">
                         <button class="btn btn-sm btn-outline-danger" type="button"
                             onclick="confirm('¿De verdad quieres eliminar esta actividad?') ? document.getElementById('delete-{{$deadline->id}}').submit() : false;">
                             <i class="fa fa-trash"></i>
