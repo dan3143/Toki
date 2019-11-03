@@ -10,7 +10,7 @@
         </div>
         <div class="card-body">
             <table class="table table-hover">
-                <thead >
+                <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Profesor</th>
@@ -25,23 +25,13 @@
                     <td> {{$subject->name}} </td>
                     <td> {{$subject->teacherName}} </td>
                     <td width="15%" style="text-align:center;"> 
-                        <form class="form-horizontal" method="POST" action="{{ route('subjects.decrement', $subject->id)}}"
-                            style="float:left">
-                            @csrf
-                            @method('put')
-                            <button name="decrement" class="btn btn-xs btn-outline-secondary" type="submit">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </form>
-                        {{$subject->absenceNumber}}/{{$subject->absenceMax}}  
-                        <form class="form-horizontal" method="POST" action="{{ route('subjects.increment', $subject->id) }}"
-                            style="float: right;">
-                            @csrf
-                            @method('put')
-                            <button name="increment" class="btn btn-xs btn-outline-secondary" type="submit">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </form>
+                        <button id="decrement-{{$subject->id}}" class="btn btn-xs btn-outline-secondary" type="button">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <span id="absenceNumber-{{$subject->id}}">{{$subject->absenceNumber}}</span>@isset($subject->absenceMax)/{{$subject->absenceMax}}@endisset
+                        <button id="increment-{{$subject->id}}" class="btn btn-xs btn-outline-secondary" type="button">
+                            <i class="fa fa-plus"></i>
+                        </button>
                     </td>
                     <td style="text-align:center;">
                         {{$subject->status == 'studying' ? 'estudiando' :
@@ -62,6 +52,46 @@
                             @csrf
                         </form>
                     </td>
+                    <script>
+                        $(document).ready(function(){
+                            $("#increment-{{$subject->id}}").click(function(){
+                                absences = $("#absenceNumber-{{$subject->id}}");
+                                value = parseInt(absences.text(), 10);
+                                $.ajax({
+                                    url: "subjects/{{$subject->id}}/increment",
+                                    method: "put",
+                                    headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+                                    success: function(result){
+                                        console.log(result);
+                                        value++;
+                                        absences.text(value);
+                                    },
+                                    error: function(xhr){
+                                        console.log("Ocurrió un error:  " + xhr.status);
+                                    }
+                                });
+                            });
+                            $("#decrement-{{$subject->id}}").click(function(){
+                                absences = $("#absenceNumber-{{$subject->id}}");
+                                value = parseInt(absences.text(), 10);
+                                $.ajax({
+                                    url: "subjects/{{$subject->id}}/increment",
+                                    method: "put",
+                                    headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+                                    success: function(result){
+                                        console.log(result);
+                                        if (value > 0){
+                                            value--;
+                                        }
+                                        absences.text(value);
+                                    },
+                                    error: function(xhr){
+                                        console.log("Ocurrió un error:  " + xhr.status);
+                                    }
+                                });
+                            });
+                        });
+                    </script>
                 </tr>
                 @endforeach
                 </tbody>  
@@ -69,4 +99,5 @@
         </div>
     </div>
 </div>
+
 @endsection

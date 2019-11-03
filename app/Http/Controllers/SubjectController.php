@@ -59,14 +59,14 @@ class SubjectController extends Controller
         $subject = Subject::findOrFail($id);
         $subject->absenceNumber++;
         $subject->save();
-        return redirect()->route('subjects');
+        return $id . " incremented";
     }
 
     public function decrement($id){
         $subject = Subject::findOrFail($id);
         $subject->absenceNumber--;
         $subject->save();
-        return redirect()->route('subjects');
+        return $id . " decremented";
     }
 
 }
