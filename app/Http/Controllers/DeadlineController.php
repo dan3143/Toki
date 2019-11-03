@@ -12,7 +12,13 @@ class DeadlineController extends Controller
     private $deadlines;
 
     public function index(Request $request){
-        return view('deadlines', ['deadlines' => Deadline::where('userId', Auth::id())->get(), 'id'=>Auth::id()]);
+        return view('deadlines', [
+                'deadlines' => Deadline::where('userId', Auth::id())
+                    ->orderBy('end_date', 'asc')
+                    ->orderBy('priority', 'desc')
+                    ->get(), 
+                'id' => Auth::id()
+             ]);
     }
 
     public function create(Request $request){
@@ -40,7 +46,7 @@ class DeadlineController extends Controller
 
     public function delete($id){
         Deadline::findOrFail($id)->delete();
-        return redirect()->route('deadlines');
+        return $id . " deleted";
     }
 
     public function edit($id){

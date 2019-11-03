@@ -49,13 +49,14 @@
                         $(document).ready(function(){
                             $("#delete-{{$subject->id}}").click(function(){
                                 if (confirm("¿De verdad quieres eliminar esta asignatura?")){
+                                    row = $("#row-{{$subject->id}} td");
                                     $.ajax({
                                         url: "subjects/{{$subject->id}}/delete",
                                         method:"DELETE",
                                         headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
                                         success: function(result){
-                                            console.log(result);
-                                            $("#row-{{$subject->id}} td").hide(200);
+                                            row.hide();
+                                            row.remove();
                                         },
                                         error: function(xhr){
                                             console.log("Ocurrió un error:  " + xhr);

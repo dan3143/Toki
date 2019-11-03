@@ -22,33 +22,47 @@
                 </thead>
                 <tbody>
                 @foreach($deadlines as $deadline)
-                <tr>
+                <tr id="row-{{$deadline->id}}">
                     <td> {{ $deadline->name }} </td>
                     <td> {{ App\Subject::where('id', $deadline->subjectId)->first()->name }} </td>
                     <td style="text-align:center;"> 
                         <span id="end_date">{{ $deadline->end_date }}</span>
-                        <span id="remaining"></span>
-                        <script>remainingDays('{{$deadline->end_date}}' + ' ' +  '{{$deadline->end_hour}}');</script>
+                        <span id="remaining-{{$deadline->id}}"></span>
+                        <script>remainingDays('{{$deadline->end_date}}' + ' ' +  '{{$deadline->end_hour}}', {{$deadline->id}});</script>
                      </td>
                     <td style="text-align:center;"> {{ $deadline->end_hour}}</td>
                     <td style="text-align:center;" width="5%"> {{ $deadline->priority == 'low' ? 'Baja' :
                             ($deadline->priority == 'medium' ? 'Mediana' : 'Alta')}} </td>
                     <td width="10%" style="text-align:center;">
-                        <button class="btn btn-sm btn-outline-danger" type="button"
-                            onclick="confirm('¿De verdad quieres eliminar esta actividad?') ? document.getElementById('delete-{{$deadline->id}}').submit() : false;">
+                        <button id="delete-{{$deadline->id}}" class="btn btn-sm btn-outline-danger" type="button">
                             <i class="fa fa-trash"></i>
                         </button>
                         <a class="btn btn-sm btn-outline-secondary" type="a" href="{{ route('deadlines.edit', $deadline->id) }}">
                             <i class="fa fa-pen"></i>
                         </a>
-                        <form id="delete-{{$deadline->id}}" 
-                            action="{{route('deadlines.delete', $deadline->id)}}" 
-                            method="POST">
-                            @method('delete')
-                            @csrf
-                        </form>
                     </td>
                 </tr>
+                <script>
+                    $(document).ready(function(){
+                        $("#delete-{{$deadline->id}}").click(function(){
+                            if (confirm("¿De verdad quieres eliminar esta tarea?")){
+                                row = $("#row-{{$deadline->id}} td");
+                                $.ajax({
+                                    url: "deadlines/{{$deadline->id}}/delete",
+                                    method:"DELETE",
+                                    headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+                                    success: function(result){
+                                        row.hide();
+                                        row.remove();
+                                    },
+                                    error: function(xhr){
+                                        console.log("Ocurrió un error:  " + xhr);
+                                    }
+                                });
+                            }
+                        });
+                    });
+                </script>
                 @endforeach
                 </tbody>  
             </table>
