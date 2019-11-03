@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                 @foreach($subjects as $subject)
-                <tr>
+                <tr id="row-{{$subject->id}}">
                     <td> {{$subject->name}} </td>
                     <td> {{$subject->teacherName}} </td>
                     <td width="15%" style="text-align:center;"> 
@@ -38,22 +38,31 @@
                           ($subject->status == 'finished' ? 'finalizada' : 'retirada')}}
                     </td>
                     <td style="text-align:center;">
-                        <button class="btn btn-sm btn-outline-danger" type="button"
-                            onclick="confirm('¿De verdad quieres eliminar esta asignatura?') ? document.getElementById('delete-{{$subject->id}}').submit() : false;">
+                        <button id="delete-{{$subject->id}}" class="btn btn-sm btn-outline-danger" type="button">
                             <i class="fa fa-trash"></i>
                         </button>
                         <a class="btn btn-sm btn-outline-secondary" type="a" href="{{ route('subjects.edit', $subject->id) }}">
                             <i class="fa fa-pen"></i>
                         </a>
-                        <form id="delete-{{$subject->id}}" 
-                            action="{{route('subjects.delete', $subject->id)}}" 
-                            method="POST">
-                            @method('delete')
-                            @csrf
-                        </form>
                     </td>
                     <script>
                         $(document).ready(function(){
+                            $("#delete-{{$subject->id}}").click(function(){
+                                if (confirm("¿De verdad quieres eliminar esta asignatura?")){
+                                    $.ajax({
+                                        url: "subjects/{{$subject->id}}/delete",
+                                        method:"DELETE",
+                                        headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+                                        success: function(result){
+                                            console.log(result);
+                                            $("#row-{{$subject->id}} td").hide(200);
+                                        },
+                                        error: function(xhr){
+                                            console.log("Ocurrió un error:  " + xhr);
+                                        }
+                                    });
+                                }
+                            });
                             $("#increment-{{$subject->id}}").click(function(){
                                 absences = $("#absenceNumber-{{$subject->id}}");
                                 value = parseInt(absences.text(), 10);
@@ -62,7 +71,6 @@
                                     method: "put",
                                     headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
                                     success: function(result){
-                                        console.log(result);
                                         value++;
                                         absences.text(value);
                                     },
@@ -79,7 +87,6 @@
                                     method: "put",
                                     headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
                                     success: function(result){
-                                        console.log(result);
                                         if (value > 0){
                                             value--;
                                         }

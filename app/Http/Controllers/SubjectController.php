@@ -32,7 +32,7 @@ class SubjectController extends Controller
 
     public function delete($id){
         Subject::findOrFail($id)->delete();
-        return redirect()->route('subjects');
+        return $id . " deleted";
     }
 
     public function edit($id){
