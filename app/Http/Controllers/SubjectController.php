@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Subject;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
+class SubjectController extends Controller
+{
+    public function index(Request $request){
+        return view('subjects', ['subjects' => Subject::where('userId', Auth::id())->get()]);
+    }
+
+    public function create(){
+        return view('create_subject');
+    }
+
+    public function store(Request $request){
+        $validatedData = $request->validate([
+            'input_subject_name' => 'required',
+        ]);
+        $subject = new Subject;
+        $subject->userId = Auth::id();
+        $subject->name = $request->input_subject_name;
+        $subject->teacherName = $request->input_teacher_name;
+        $subject->absenceMax = $request->input_max_absences;
+        $subject->status = "studying";
+        $subject->save();
+        return redirect()->route('subjects');
+    }
+
+    public function delete($id){
+        Subject::findOrFail($id)->delete();
+        return redirect()->route('subjects');
+    }
+    public function increment($id){
+        $subject = Subject::findOrFail($id);
+        $subject->absenceNumber++;
+        $subject->save();
+        return redirect()->route('subjects');
+    }
+
+    public function decrement($id){
+        $subject = Subject::findOrFail($id);
+        $subject->absenceNumber--;
+        $subject->save();
+        return redirect()->route('subjects');
+    }
+
+}

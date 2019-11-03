@@ -19,8 +19,8 @@ class CreateSubjectsTable extends Migration
             $table->string('name');
             $table->string('teacherName');
             $table->enum('status', ['studying', 'finished', 'retired']);
-            $table->integer('absenceNumber');
-            $table->integer('absenceMax');
+            $table->integer('absenceNumber')->default(0);
+            $table->integer('absenceMax')->nullable();
             $table->timestamps();
             $table->foreign('userId')
                   ->references('username')->on('users')

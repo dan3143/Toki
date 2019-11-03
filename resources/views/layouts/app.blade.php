@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/sidenav.js') }}"></script>
+    <script src="{{ asset('js/aux_functions.js') }}"></script>
     
 
     <!-- Fonts -->
@@ -33,12 +33,10 @@
                     <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
                     <a href="#" onclick="closeNav()">Disponibilidad de salas</a>
                     <a href="#" onclick="closeNav()">Notas</a>
-                    <a href="#" onclick="closeNav()">Asignaturas</a>
+                    <a href="{{ route('subjects') }}" onclick="closeNav()">Asignaturas</a>
                 </div>
-                <a class="btn" type="button" onclick="openNav()">
+                <a class="navbar-brand" type="button" onclick="openNav()">
                     <i class="fa fa-bars"></i>
-                </a>
-                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

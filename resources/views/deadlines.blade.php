@@ -25,7 +25,11 @@
                 <tr>
                     <td> {{ $deadline->name }} </td>
                     <td> {{ App\Subject::where('id', $deadline->subjectId)->first()->name }} </td>
-                    <td style="text-align:center;"> {{ $deadline->end_date }} </td>
+                    <td style="text-align:center;"> 
+                        <span id="end_date">{{ $deadline->end_date }}</span>
+                        <span id="remaining"></span>
+                        <script>remainingDays('{{$deadline->end_date}}' + ' ' +  '{{$deadline->end_hour}}');</script>
+                     </td>
                     <td style="text-align:center;"> {{ $deadline->end_hour}}
                     <td style="text-align:center;" width="5%"> {{ $deadline->priority == 'low' ? 'Baja' :
                             ($deadline->priority == 'medium' ? 'Mediana' : 'Alta')}} </td>
