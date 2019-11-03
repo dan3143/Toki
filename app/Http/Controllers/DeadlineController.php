@@ -20,7 +20,7 @@ class DeadlineController extends Controller
     }
 
     public function store(Request $request){
-        $validatedData = $request->validate([
+        $request->validate([
             'input_deadline_name' => 'required',
             'input_date' => 'required',
             'input_time' => 'required',
@@ -50,6 +50,13 @@ class DeadlineController extends Controller
 
     public function update(Request $request, $id){
         $deadline = Deadline::findOrFail($id);
+        $request->validate([
+            'input_deadline_name' => 'required',
+            'input_date' => 'required',
+            'input_time' => 'required',
+            'input_subject' => 'required',
+            'input_priority' => 'required',
+        ]);
         $deadline->name = $request->input_deadline_name;
         $deadline->end_date = $request->input_date;
         $deadline->end_hour = $request->input_time;

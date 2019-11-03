@@ -17,7 +17,7 @@ class SubjectController extends Controller
     }
 
     public function store(Request $request){
-        $validatedData = $request->validate([
+        $request->validate([
             'input_subject_name' => 'required',
         ]);
         $subject = new Subject;
@@ -34,6 +34,27 @@ class SubjectController extends Controller
         Subject::findOrFail($id)->delete();
         return redirect()->route('subjects');
     }
+
+    public function edit($id){
+        $subject = Subject::findOrFail($id);
+        return view('edit_subject', ['subject' => $subject]);
+    }
+
+    public function update(Request $request, $id){
+        
+        $subject = Subject::findOrFail($id);
+        $request->validate([
+            'input_subject_name' => 'required',
+            'input_status' => 'required',
+        ]);
+        $subject->name = $request->input_subject_name;
+        $subject->teacherName = $request->input_teacher_name;
+        $subject->absenceMax = $request->input_max_absences;
+        $subject->status = $request->input_status;
+        $subject->save();
+        return redirect()->route('subjects');
+    }
+
     public function increment($id){
         $subject = Subject::findOrFail($id);
         $subject->absenceNumber++;
