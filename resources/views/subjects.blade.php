@@ -52,7 +52,7 @@
                             onclick="confirm('¿De verdad quieres eliminar esta asignatura?') ? document.getElementById('delete-{{$subject->id}}').submit() : false;">
                             <i class="fa fa-trash"></i>
                         </button>
-                        <a class="btn btn-sm btn-outline-secondary" type="button" href="{{ route('subjects.edit', $subject->id) }}">
+                        <a class="btn btn-sm btn-outline-secondary" type="a" href="{{ route('subjects.edit', $subject->id) }}">
                             <i class="fa fa-pen"></i>
                         </a>
                         <form id="delete-{{$subject->id}}" 

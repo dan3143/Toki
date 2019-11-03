@@ -17,11 +17,12 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidenav.css') }}" rel="stylesheet">
-
+     
 </head>
 <body>
     <div id="app">
@@ -37,11 +38,11 @@
                         <a href="#" onclick="closeNav()">Notas</a>
                         <a href="{{ route('subjects') }}" onclick="closeNav()">Asignaturas</a>
                     </div>
-                    <a class="navbar-brand" type="button" onclick="openNav()">
+                    <a class="navbar-brand" type="a" onclick="openNav()">
                         <i class="fa fa-bars"></i>
                         <img src="toki.png" alt="Toki" width="15%" height="15%">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <button class="navbar-toggler" type="a" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                 @endguest

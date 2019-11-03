@@ -38,7 +38,7 @@
                             onclick="confirm('¿De verdad quieres eliminar esta actividad?') ? document.getElementById('delete-{{$deadline->id}}').submit() : false;">
                             <i class="fa fa-trash"></i>
                         </button>
-                        <a class="btn btn-sm btn-outline-secondary" type="button" href="{{ route('deadlines.edit', $deadline->id) }}">
+                        <a class="btn btn-sm btn-outline-secondary" type="a" href="{{ route('deadlines.edit', $deadline->id) }}">
                             <i class="fa fa-pen"></i>
                         </a>
                         <form id="delete-{{$deadline->id}}" 
