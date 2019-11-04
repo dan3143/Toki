@@ -168,7 +168,7 @@
                     } else {
                         message = "Ya ganaste la materia. Esfuérzate para dejarla alta, de todos modos";
                     }
-                    $("#calculation").text(message);
+                    $("#calculation").html(message);
                     $("#needed_grade_modal").modal();
                 },
                 error: function(xhr){ console.log("Ocurrió un error:  " + xhr.status); }

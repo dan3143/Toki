@@ -70,6 +70,9 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() == 'deadlines' ? 'active' : ''}}" href="{{ route('deadlines') }}">Tareas</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::currentRouteName() == 'subjects' ? 'active' : ''}}" href="{{ route('subjects') }}">Asignaturas</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Cuenta</a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
