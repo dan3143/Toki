@@ -33,10 +33,14 @@ Route::put('/deadlines/{id}/update', 'DeadlineController@update')->name('deadlin
 
 //----------Subjects--------
 Route::get('/subjects', 'SubjectController@index')->name('subjects')->middleware('auth');
+Route::get('/subjects/{id}', 'SubjectController@show')->name('subjects.show')->middleware('auth');
 Route::get('/subjects/create', 'SubjectController@create')->name('subjects.create')->middleware('auth');
 Route::post('/subjects', 'SubjectController@store')->name('subjects.store')->middleware('auth');
+Route::post('/subjects/{id}/add_grade', 'SubjectController@addGrade')->name('subjects.add_grade')->middleware('auth');
+Route::delete('/subjects/grade/{id}/delete', 'SubjectController@delete_grade')->name('subjects.delete_grade')->middleware('auth');
 Route::delete('/subjects/{id}/delete', 'SubjectController@delete')->name('subjects.delete')->middleware('auth');
 Route::get('/subjects/{id}/edit', 'SubjectController@edit')->name('subjects.edit')->middleware('auth');
 Route::put('/subjects/{id}/update', 'SubjectController@update')->name('subjects.update')->middleware('auth');
 Route::put('/subjects/{id}/increment', 'SubjectController@increment')->name('subjects.increment')->middleware('auth');
 Route::put('/subjects/{id}/decrement', 'SubjectController@decrement')->name('subjects.decrement')->middleware('auth');
+

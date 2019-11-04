@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Grade;
 use App\Subject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -28,6 +29,25 @@ class SubjectController extends Controller
         $subject->status = "studying";
         $subject->save();
         return redirect()->route('subjects');
+    }
+
+    public function addGrade(Request $request, $id){
+        $request->validate([
+            'input_value' => 'required',
+            'input_percentage' => 'required'
+        ]);
+        $grade = new Grade;
+        $grade->userId = Auth::id();
+        $grade->subjectId = $id;
+        $grade->value = $request->input_value;
+        $grade->percentage = $request->input_percentage;
+        $grade->save();
+        return redirect()->route('subjects.show', $id);
+    }
+
+    public function delete_grade($id){
+        Grade::findOrFail($id)->delete();
+        return $id . " deleted";
     }
 
     public function delete($id){
@@ -68,5 +88,16 @@ class SubjectController extends Controller
         $subject->save();
         return $id . " decremented";
     }
+
+    public function show($id){
+        $grades = Grade::where('userId', Auth::id())->where('subjectId', $id);
+        return view('show_subject', [
+            'subject' => Subject::findOrFail($id),
+            'grades'  =>  $grades->get(),
+            'defined' => $grades->sum('percentage'),
+        ]);
+    }
+
+    
 
 }

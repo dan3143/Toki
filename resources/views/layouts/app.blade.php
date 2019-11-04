@@ -37,12 +37,11 @@
                         <a href="{{ route('schedule') }}" onclick="closeNav()">Horario</a>
                         <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
                         <a href="#" onclick="closeNav()">Disponibilidad de salas</a>
-                        <a href="#" onclick="closeNav()">Notas</a>
                         <a href="{{ route('subjects') }}" onclick="closeNav()">Asignaturas</a>
                     </div>
                     <a class="navbar-brand" type="a" onclick="openNav()">
                         <i class="fa fa-bars"></i>
-                        <img src="toki.png" alt="Toki" width="15%" height="15%">
+                        <img src="{{asset('toki.png')}}" alt="Toki" width="15%" height="15%">
                     </a>
                     <button class="navbar-toggler" type="a" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
@@ -53,7 +52,7 @@
                     <ul class="navbar-nav mr-auto">
                     </ul>
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -72,10 +71,7 @@
                                 <a class="nav-link {{ Route::currentRouteName() == 'deadlines' ? 'active' : ''}}" href="{{ route('deadlines') }}">Tareas</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Cuenta<span class="caret"></span>
-                                </a>
-
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Cuenta</a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <span class="dropdown-item disabled"><b>{{ Auth::user()->name }}</b></span>
                                     <a class="dropdown-item" href="{{ route('settings') }}">

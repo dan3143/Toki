@@ -44,6 +44,9 @@
                         <a class="btn btn-sm btn-outline-secondary" type="a" href="{{ route('subjects.edit', $subject->id) }}">
                             <i class="fa fa-pen"></i>
                         </a>
+                        <a class="btn btn-sm btn-outline-info" type="a" href="{{ route('subjects.show', $subject->id) }}">
+                            <i class="fa fa-info"></i>
+                        </a>
                     </td>
                     <script>
                         $(document).ready(function(){
