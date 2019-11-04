@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Grade;
 use App\Subject;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -45,9 +46,10 @@ class SubjectController extends Controller
         return redirect()->route('subjects.show', $id);
     }
 
-    public function delete_grade($id){
+    public function delete_grade($subjectId, $id){
         Grade::findOrFail($id)->delete();
-        return $id . " deleted";
+        $grades = Grade::where('userId', Auth::id())->where('subjectId', $subjectId);
+        return $grades->sum(DB::raw('value * (percentage/100)'));
     }
 
     public function delete($id){
@@ -91,13 +93,20 @@ class SubjectController extends Controller
 
     public function show($id){
         $grades = Grade::where('userId', Auth::id())->where('subjectId', $id);
-        return view('show_subject', [
+        $info = [
             'subject' => Subject::findOrFail($id),
             'grades'  =>  $grades->get(),
             'defined' => $grades->sum('percentage'),
-        ]);
+            'current_grade' => $grades->sum(DB::raw('value * (percentage/100)'))
+        ];
+        return view('show_subject', $info);
     }
 
-    
-
+    public function getSum($id){
+        $grades = Grade::where('userId', Auth::id())->where('subjectId', $id);
+        return  json_encode([
+            "sum" => $grades->sum(DB::raw('value * (percentage/100)')),
+            "percentage" => $percentage = (1 - $grades->sum('percentage')/100)
+        ]);
+    }
 }

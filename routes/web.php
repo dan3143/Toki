@@ -37,7 +37,8 @@ Route::get('/subjects/{id}', 'SubjectController@show')->name('subjects.show')->m
 Route::get('/subjects/create', 'SubjectController@create')->name('subjects.create')->middleware('auth');
 Route::post('/subjects', 'SubjectController@store')->name('subjects.store')->middleware('auth');
 Route::post('/subjects/{id}/add_grade', 'SubjectController@addGrade')->name('subjects.add_grade')->middleware('auth');
-Route::delete('/subjects/grade/{id}/delete', 'SubjectController@delete_grade')->name('subjects.delete_grade')->middleware('auth');
+Route::get('/subjects/{id}/get_sum', 'SubjectController@getSum')->name('subjects.get_sum')->middleware('auth');
+Route::delete('/subjects/{id}/grade/{grade_id}/delete', 'SubjectController@delete_grade')->name('subjects.delete_grade')->middleware('auth');
 Route::delete('/subjects/{id}/delete', 'SubjectController@delete')->name('subjects.delete')->middleware('auth');
 Route::get('/subjects/{id}/edit', 'SubjectController@edit')->name('subjects.edit')->middleware('auth');
 Route::put('/subjects/{id}/update', 'SubjectController@update')->name('subjects.update')->middleware('auth');

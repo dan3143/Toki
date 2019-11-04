@@ -37,7 +37,7 @@
                                 row = $("#row-{{$grade->id}} td");
                                 percentage = {{$grade->percentage}};
                                 $.ajax({
-                                    url: "{{ route('subjects.delete_grade', $grade->id) }}",
+                                    url: "{{ route('subjects.delete_grade', [$subject->id, $grade->id]) }}",
                                     method:"DELETE",
                                     headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
                                     success: function(result){
@@ -46,6 +46,12 @@
                                         $("#defined").text(value);
                                         row.hide();
                                         row.remove();
+                                        if (value < 100){
+                                            $("#agregar_nota").removeAttr("hidden");
+                                            $("#input_percentage").attr("max", 100-value);
+                                        }
+                                        console.log(result);
+                                        $("#current_grade").text(result);
                                     },
                                     error: function(xhr){
                                         console.log("Ocurrió un error:  " + xhr.status);
@@ -57,16 +63,22 @@
                 </script>
                 @endforeach
                 <tr>
-                    @if($defined < 100)
-                        <td colspan="3" class="text-center">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_add">
-                                <i class="fa fa-plus"></i> Agregar nota
-                            </button>
-                        </td>
-                    @endif
+                    <td colspan="3" class="text-center">
+                        <button @if($defined == 100) hidden @endif id="agregar_nota" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_add">
+                            <i class="fa fa-plus"></i> Agregar nota
+                        </button>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-center">
+                        <p>Tienes la materia en: <span id="current_grade">{{$current_grade}}</span>
+                    </td>
                 </tr>
             </table>
-            
+            <label for="minimum">Quiero dejar la materia en:</label>
+            <input value="3" name="minimum" step="0.01" type="number" min="0" max="5" id="minimum" placeholder="Nota mínima">
+            <button class="btn btn-sm btn-outline-secondary" type="button" id="calculate">Calcular</button>
         </div>
         
     </div>            
@@ -95,7 +107,7 @@
                 </div>
                 <div class="form-group">
                     <label for="input_percentage">Porcentaje</label>
-                    <input type="number" min="0" max="{{100-$defined}}" name="input_percentage" class="form-control @error('input_percentage') is-invalid @enderror" 
+                    <input id="input_percentage" type="number" min="0" max="{{100-$defined}}" name="input_percentage" class="form-control @error('input_percentage') is-invalid @enderror" 
                         placeholder="Ingresa el valor de la nota"
                         value="{{old('input_percentage')}}">
                     @error('input_percentage')
@@ -112,4 +124,57 @@
   </div>
 </div>
 
+<div class="modal fade" id="needed_grade_modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addModal">Agregar nota</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <p id="calculation"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<script>
+    $(document).ready(function(){
+        $("#calculate").click(function(){
+            $.ajax({
+                url: "{{ route('subjects.get_sum', $subject->id) }}",
+                method:"GET",
+                headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+                success: function(result){ 
+                    result = JSON.parse(result);
+                    var min = $("#minimum").val();
+                    var grade = ((min-result.sum)/result.percentage).toFixed(2);
+                    var message = "";
+                    if (grade > 5){
+                        message = "Desafortunadamente es imposible dejar la materia en " + min;
+                        message += "<br>Necesitarías " + grade;
+                    }else if (grade > 4){
+                        message = "Todavía se puede!<br>Necesitarás sacar " + grade + " de ahora en adelante";
+                    }else if (grade > 0){
+                        message = "Necesitarás sacar " + grade + " en todo de ahora en adelante";
+                    } else {
+                        message = "Ya ganaste la materia. Esfuérzate para dejarla alta, de todos modos";
+                    }
+                    $("#calculation").text(message);
+                    $("#needed_grade_modal").modal();
+                },
+                error: function(xhr){ console.log("Ocurrió un error:  " + xhr.status); }
+            });;
+            
+        });
+    });
+</script>
 @endsection
