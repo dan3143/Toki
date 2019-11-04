@@ -32,3 +32,14 @@ function minDate(){
     picker.setAttribute('min', d);
     console.log(picker);
 }
+
+function disableSubmit() {
+  var allowSubmit = true;
+  frm = document.getElementById('form');
+  frm.onsubmit = function () {
+  if (allowSubmit)
+      allowSubmit = false;
+  else 
+      return false;
+  }
+};

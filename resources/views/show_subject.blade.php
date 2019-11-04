@@ -93,7 +93,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form method="post" action="{{ route('subjects.add_grade', $subject->id) }}">
+        <form method="post" action="{{ route('subjects.add_grade', $subject->id) }}" id="form" onsubmit="disableSubmit()">
             @csrf
             <div class="modal-body">
                 <div class="form-group">

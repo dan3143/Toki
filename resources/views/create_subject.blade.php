@@ -15,7 +15,7 @@
                 </ul>
             </div>
             @endif
-            <form method="post" action="{{ route('subjects.store') }}">
+            <form method="post" action="{{ route('subjects.store') }}" id="form" onsubmit="disableSubmit()">
                 @csrf
                 <div class="form-group">
                     <label for="input_subject_name">Nombre</label>

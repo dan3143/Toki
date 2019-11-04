@@ -15,7 +15,7 @@
                 </ul>
             </div>
             @endif
-            <form method="post" action="{{ route('deadlines.store') }}">
+            <form method="post" action="{{ route('deadlines.store') }}" id="form" onsubmit="disableSubmit()">
                 @csrf
                 <div class="form-group">
                     <label for="input_deadline_name">Nombre</label>
