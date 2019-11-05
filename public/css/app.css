@@ -2679,9 +2679,12 @@ textarea.form-control.is-invalid {
 
   .form-inline .custom-control-label {
     margin-bottom: 0;
+    
   }
 }
-
+label {
+  color:white;
+}
 .btn {
   display: inline-block;
   font-weight: 400;
@@ -2732,14 +2735,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #3490dc;
-  border-color: #3490dc;
+  background-color: #d32f2f;
+  border-color:  #9a0007;  
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #227dc7;
-  border-color: #2176bd;
+  background-color: #ff6659;
+  border-color: #ff6659;
 }
 
 .btn-primary:focus,
@@ -4015,13 +4018,11 @@ input[type=button].btn-block {
 
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
-  border-color: #3490dc;
-  background-color: #3490dc;
+  background-color: #ff6659;
+  border-color: #9a0007;
 }
 
-.custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
-}
+
 
 .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
   border-color: #a1cbef;
@@ -4030,7 +4031,7 @@ input[type=button].btn-block {
 .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
   color: #fff;
   background-color: #cce3f6;
-  border-color: #cce3f6;
+  border-color: #9a0007;
 }
 
 .custom-control-input:disabled ~ .custom-control-label {
@@ -5046,8 +5047,8 @@ input[type=button].btn-block {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: #b30b13;
+  border-bottom: 3px solid #7a0107;;
 }
 
 .card-header:first-child {
@@ -7710,6 +7711,7 @@ button.bg-dark:focus {
 
 .align-self-center {
   align-self: center !important;
+  color: white; 
 }
 
 .align-self-baseline {
