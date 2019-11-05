@@ -3,10 +3,14 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <span class="align-self-center">Tus tareas</span>
+            <span>Tus tareas</span>
             <a href="{{ route('deadlines.create') }}" class="btn btn-sm btn-primary float-right">
                 Nueva tarea
             </a>
+            <div class="custom-control custom-switch float-right mr-4">
+                <input type="checkbox" class="custom-control-input" id="show_dates">
+                <label class="custom-control-label" for="show_dates">Mostrar fechas</label>
+            </div>
         </div>
         <div class="card-body">
             <table class="table table-hover">
@@ -15,7 +19,7 @@
                         <th>Nombre</th>
                         <th>Asignatura</th>
                         <th style="text-align:center;">Fecha límite</th>
-                        <th style="text-align:center;">Hora límite</th>
+                        <th style="text-align:center;">Hora</th>
                         <th style="text-align:center;">Prioridad</th>
                         <th style="text-align:center;">Acción</th>
                     </tr>
@@ -25,13 +29,15 @@
                 <tr id="row-{{$deadline->id}}">
                     <td> {{ $deadline->name }} </td>
                     <td> {{ App\Subject::where('id', $deadline->subjectId)->first()->name }} </td>
-                    <td style="text-align:center;"> 
-                        <span id="end_date">{{ $deadline->end_date }}</span>
+                    <td style="text-align:center;">
+                        <span id="end_date" class="date">{{ date('d/m/Y', strtotime($deadline->end_date))}}</span>
+                        <span class="parenthesis">(</span>
                         <span id="remaining-{{$deadline->id}}"></span>
+                        <span class="parenthesis">)</span>
                         <script>remainingDays('{{$deadline->end_date}}' + ' ' +  '{{$deadline->end_hour}}', {{$deadline->id}});</script>
                      </td>
-                    <td style="text-align:center;"> {{ $deadline->end_hour}}</td>
-                    <td style="text-align:center;" width="5%"> {{ $deadline->priority == 'low' ? 'Baja' :
+                    <td style="text-align:center;"> {{ date('h:i a', strtotime($deadline->end_hour))}}</td>
+                    <td style="text-align:center;"> {{ $deadline->priority == 'low' ? 'Baja' :
                             ($deadline->priority == 'medium' ? 'Mediana' : 'Alta')}} </td>
                     <td width="10%" style="text-align:center;">
                         <button id="delete-{{$deadline->id}}" class="btn btn-sm btn-outline-danger" type="button">
@@ -69,4 +75,25 @@
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function(){
+    if($("#show_dates").prop("checked")){
+        $(".date").show();
+        $(".parenthesis").show();
+    }else{
+        $(".date").hide();
+        $(".parenthesis").hide();
+    }
+    $("#show_dates").click(function(){
+      console.log("hi");
+      if($("#show_dates").prop("checked")){
+          $(".date").show();
+          $(".parenthesis").show();
+      }else{
+          $(".date").hide();
+          $(".parenthesis").hide();
+      }
+  });
+});
+</script>
 @endsection

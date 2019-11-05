@@ -33,8 +33,8 @@ Route::put('/deadlines/{id}/update', 'DeadlineController@update')->name('deadlin
 
 //----------Subjects--------
 Route::get('/subjects', 'SubjectController@index')->name('subjects')->middleware('auth');
+Route::get('/subjects/create_subject', 'SubjectController@create')->name('subjects.create')->middleware('auth');
 Route::get('/subjects/{id}', 'SubjectController@show')->name('subjects.show')->middleware('auth');
-Route::get('/subjects/create', 'SubjectController@create')->name('subjects.create')->middleware('auth');
 Route::post('/subjects', 'SubjectController@store')->name('subjects.store')->middleware('auth');
 Route::post('/subjects/{id}/add_grade', 'SubjectController@addGrade')->name('subjects.add_grade')->middleware('auth');
 Route::get('/subjects/{id}/get_sum', 'SubjectController@getSum')->name('subjects.get_sum')->middleware('auth');

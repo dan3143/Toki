@@ -12,9 +12,16 @@ function remainingDays(to, id){
   var oneDay = 24*60*60*1000; //hours*minutes*seconds*milliseconds
   var today = new Date();
   var secondDate = new Date(to);
-  remaining = Math.round(Math.abs(secondDate.getTime() - today.getTime())/oneDay);
+  remaining = Math.round((secondDate.getTime() - today.getTime())/oneDay);
   var element = document.getElementById('remaining-' + id);
-  element.innerHTML = "("+remaining+" días)";
+  message = "";
+  if (remaining < 0){
+    element.classList.add("text-danger");
+    remaining = Math.abs(remaining);
+    message = "hace ";
+  }
+  message = message + remaining+" día"+(remaining==1 ? '' : 's');
+  element.innerHTML = message;
 }
 
 function minDate(){
@@ -43,3 +50,4 @@ function disableSubmit() {
       return false;
   }
 };
+
