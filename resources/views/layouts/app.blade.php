@@ -36,7 +36,7 @@
                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                         <a href="{{ route('schedule') }}" onclick="closeNav()">Horario</a>
                         <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
-                        <a href="#" onclick="closeNav()">Disponibilidad de salas</a>
+                        <a href="{{ route('user_room') }}" onclick="closeNav()">Disponibilidad de salas</a>
                         <a href="{{ route('subjects') }}" onclick="closeNav()">Asignaturas</a>
                     </div>
                     <a class="navbar-brand" type="a" onclick="openNav()">
