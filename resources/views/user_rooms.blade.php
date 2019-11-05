@@ -3,7 +3,7 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <span class="align-self-center">SALAS DE USUARIO</span>
+            <span class="align-self-center">Salas de Usuario</span>
         </div>
         <div class="card-body">
             <table class="table table-hover">

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <span>Tus tareas</span>
+            <span class ="align-self-center" >Tus tareas</span>
             <a href="{{ route('deadlines.create') }}" class="btn btn-sm btn-primary float-right">
                 Nueva tarea
             </a>
