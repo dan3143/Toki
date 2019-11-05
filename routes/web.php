@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/schedule', 'ScheduleController@index')->name('schedule')->middleware('auth');
 Route::get('/settings', 'SettingsController@index')->name('settings')->middleware('auth');
 Route::get('/account', 'AccountController@index')->name('account')->middleware('auth');
-
+Route::get('/user_room', 'UserRoomController@index')->name('user_room')->middleware('auth');
 
 //-----------Deadlines-------
 Route::get('/deadlines', 'DeadlineController@index')->name('deadlines')->middleware('auth');
