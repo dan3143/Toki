@@ -88,9 +88,7 @@
             @endif
 
             <div class="content">
-                <div class="title">
-                    Toki 時
-                </div>
+            <img src="{{asset('toki.png')}}" alt="Toki" width="100%" height="100%">
             </div>
         </div>
     </body>
