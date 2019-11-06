@@ -17,11 +17,10 @@ class CreateActivitiesTable extends Migration
             $table->bigIncrements('id');
             $table->string('userId');
             $table->string('name');
-            $table->json('days');
             $table->time('start_hour');
             $table->time('end_hour');
             $table->string('day');
-            $table->string('place');
+            $table->string('place')->nullable();
             $table->timestamps();
             $table->foreign('userId')
                   ->references('username')->on('users')
