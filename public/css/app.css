@@ -242,6 +242,7 @@ th {
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
+  color: black;
 }
 
 button {
@@ -2679,12 +2680,11 @@ textarea.form-control.is-invalid {
 
   .form-inline .custom-control-label {
     margin-bottom: 0;
+   
     
   }
 }
-label {
-  color:white;
-}
+
 .btn {
   display: inline-block;
   font-weight: 400;
@@ -2747,28 +2747,28 @@ fieldset:disabled a.btn {
 
 .btn-primary:focus,
 .btn-primary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(82, 161, 225, 0.5);
+  box-shadow: 0 0 0 0.2rem #9a000867;
 }
 
 .btn-primary.disabled,
 .btn-primary:disabled {
   color: #fff;
-  background-color: #3490dc;
-  border-color: #3490dc;
+  background-color: #d32f2f;
+  border-color: #9a0007;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #2176bd;
-  border-color: #1f6fb2;
+  background-color: #d32f2f;
+  border-color: #9a0007;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus,
 .btn-primary:not(:disabled):not(.disabled).active:focus,
 .show > .btn-primary.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(82, 161, 225, 0.5);
+  box-shadow: 0 0 0 0.2rem #9a0007;
 }
 
 .btn-secondary {
@@ -4046,6 +4046,7 @@ input[type=button].btn-block {
   position: relative;
   margin-bottom: 0;
   vertical-align: top;
+  color: white;
 }
 
 .custom-control-label::before {
