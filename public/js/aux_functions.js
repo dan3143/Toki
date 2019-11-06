@@ -140,3 +140,30 @@ function deleteDeadline(id){
         });
     }
 }
+
+function deleteGrade(subjectId, gradeId, percentage){
+    if (confirm("¿De verdad quieres eliminar esta nota?")){
+        row = $("#row-"+gradeId+" td");;
+        $.ajax({
+            url: "/subjects/" + subjectId + "/grade/" + gradeId + "/delete",
+            method:"DELETE",
+            headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+            success: function(result){
+                value = parseInt($('#defined').text(), 10);
+                value -= percentage;
+                $("#defined").text(value);
+                row.hide();
+                row.remove();
+                if (value < 100){
+                    $("#agregar_nota").removeAttr("hidden");
+                    $("#input_percentage").attr("max", 100-value);
+                }
+                console.log(result);
+                $("#current_grade").text(result);
+            },
+            error: function(xhr){
+                console.log("Ocurrió un error:  " + xhr.status);
+            }
+        });
+    }
+}

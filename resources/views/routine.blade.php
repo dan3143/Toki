@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-    <nav aria-label="Days"  >
+    <nav aria-label="Days" >
         <ul class="pagination justify-content-center">
             <li class="page-item {{$day=="sunday" ? 'active':''}}"><a class="page-link" href="{{route('routine', 'sunday')}}">Domingo</a></li>
             <li class="page-item {{$day=="monday" ? 'active':''}}"><a class="page-link" href="{{route('routine', 'monday')}}">Lunes</a></li>
@@ -31,5 +31,10 @@
         </div>
     </div>
     @endforeach
+    <button class="btn btn-primary btn-lg fixed-button">
+        <i class="fa fa-plus"></i>
+    </button>
 </div>
+
+
 @endsection
