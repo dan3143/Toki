@@ -45,3 +45,6 @@ Route::put('/subjects/{id}/update', 'SubjectController@update')->name('subjects.
 Route::put('/subjects/{id}/increment', 'SubjectController@increment')->name('subjects.increment')->middleware('auth');
 Route::put('/subjects/{id}/decrement', 'SubjectController@decrement')->name('subjects.decrement')->middleware('auth');
 
+//--------Routine------
+Route::get('/routine/{day}', 'RoutineController@index')->name('routine')->middleware('auth');
+Route::delete('/routine/{id}/delete', 'RoutineController@delete')->name('routine.delete')->middleware('auth');
