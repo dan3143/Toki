@@ -48,4 +48,5 @@ Route::put('/subjects/{id}/decrement', 'SubjectController@decrement')->name('sub
 //--------Routine------
 Route::get('/routine/{day}', 'RoutineController@index')->name('routine')->middleware('auth');
 Route::post('/routine/{day}', 'RoutineController@store')->name('routine.store')->middleware('auth');
+Route::put('/routine/{day}', 'RoutineController@update')->name('routine.update')->middleware('auth');
 Route::delete('/routine/{id}/delete', 'RoutineController@delete')->name('routine.delete')->middleware('auth');
