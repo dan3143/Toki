@@ -51,3 +51,92 @@ function disableSubmit() {
   }
 };
 
+function deleteCard(id){
+    if (confirm("¿De verdad quieres eliminar esta actividad?")){
+      $.ajax({
+          url: id+"/delete",
+          method:"DELETE",
+          headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+          success: function(result){
+              $("#card-"+id).remove();
+          },
+          error: function(xhr){
+              console.log("Ocurrió un error:  " + xhr.status);
+          }
+      });
+  }        
+}
+
+function deleteSubject(id){
+  $("#delete-"+id).click(function(){
+    if (confirm("¿De verdad quieres eliminar esta asignatura?")){
+        row = $("#row-"+id+" td");
+        $.ajax({
+            url: "subjects/"+id+"/delete",
+            method:"DELETE",
+            headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+            success: function(result){
+                row.hide();
+                row.remove();
+            },
+            error: function(xhr){
+                console.log("Ocurrió un error:  " + xhr);
+            }
+        });
+    }
+  });
+}
+
+function increment(id){
+  absences = $("#absenceNumber-"+id);
+  value = parseInt(absences.text(), 10);
+  $.ajax({
+      url: "subjects/"+id+"/increment",
+      method: "put",
+      headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+      success: function(result){
+          value++;
+          absences.text(value);
+      },
+      error: function(xhr){
+          console.log("Ocurrió un error:  " + xhr.status);
+      }
+  });
+}
+
+function decrement(id){
+  absences = $("#absenceNumber-"+id);
+  value = parseInt(absences.text(), 10);
+  $.ajax({
+      url: "subjects/"+id+"/increment",
+      method: "put",
+      headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+      success: function(result){
+          if (value > 0){
+              value--;
+          }
+          absences.text(value);
+      },
+      error: function(xhr){
+          console.log("Ocurrió un error:  " + xhr.status);
+      }
+  });
+}
+
+function deleteDeadline(id){
+    if (confirm("¿De verdad quieres eliminar esta tarea?")){
+        row = $("#row-"+id+" td");
+        $.ajax({
+            url: "deadlines/"+id+"/delete",
+            method:"DELETE",
+            headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+            success: function(result){
+                row.hide();
+                row.remove();
+            },
+            error: function(xhr){
+                console.log("Ocurrió un error:  " + xhr);
+            }
+        });
+    }
+}

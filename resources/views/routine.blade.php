@@ -32,23 +32,4 @@
     </div>
     @endforeach
 </div>
-
-<script>
-    function deleteCard(id){
-         if (confirm("¿De verdad quieres eliminar esta actividad?")){
-            $.ajax({
-                url: id+"/delete",
-                method:"DELETE",
-                headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
-                success: function(result){
-                    $("#card-"+id).remove();
-                },
-                error: function(xhr){
-                    console.log("Ocurrió un error:  " + xhr.status);
-                }
-            });
-        }
-        
-    }
-</script>
 @endsection

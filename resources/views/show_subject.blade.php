@@ -173,7 +173,6 @@
                 },
                 error: function(xhr){ console.log("Ocurrió un error:  " + xhr.status); }
             });;
-            
         });
     });
 </script>

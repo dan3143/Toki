@@ -19,6 +19,8 @@ class CreateActivitiesTable extends Migration
             $table->string('name');
             $table->json('days');
             $table->time('start_hour');
+            $table->time('end_hour');
+            $table->string('day');
             $table->string('place');
             $table->timestamps();
             $table->foreign('userId')

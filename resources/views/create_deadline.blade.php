@@ -47,6 +47,7 @@
                     <label for="input_subject">Asignatura</label>
                     <select class="form-control @error('input_subject') is-invalid @enderror" name="input_subject">
                         <option selected disabled hidden>Elije una asignatura</option>
+                        <option value="">Ninguna</option>
                         @foreach ($subjects as $subject)
                         <option value="{{$subject->id}}">{{$subject->name}}</option>
                         @endforeach        
@@ -59,6 +60,7 @@
                     <label for="input_priority">Prioridad</label>
                     <select class="form-control @error('input_priority') is-invalid @enderror" name="input_priority">
                         <option selected disabled hidden>Elije una prioridad</option>
+                        <option value="none">Ninguna</option>
                         <option value="high">Alta</option>
                         <option value="medium">Media</option>
                         <option value="low">Baja</option>

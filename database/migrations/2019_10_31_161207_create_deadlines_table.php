@@ -19,9 +19,9 @@ class CreateDeadlinesTable extends Migration
             $table->string('name');
             $table->date('end_date');
             $table->time('end_hour');
-            $table->bigInteger('subjectId')->unsigned();
+            $table->bigInteger('subjectId')->unsigned()->nullable();
             $table->bigInteger('noteId')->unsigned()->nullable();
-            $table->enum('priority', ['low', 'medium', 'high']);
+            $table->enum('priority', ['none', 'low', 'medium', 'high']);
             $table->timestamps();
             $table->foreign('userId')
                   ->references('username')->on('users')

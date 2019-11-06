@@ -13,7 +13,7 @@ class RoutineController extends Controller
         if (!in_array($day, $days)){
             abort(404);
         }
-        $activities = Activity::where('userId', Auth::id())->where($day, true)
+        $activities = Activity::where('userId', Auth::id())->where('day', $day)
                                                            ->orderBy('start_hour', 'asc')
                                                            ->get();
         return view('routine', ['activities' => $activities, "day" => $day]);

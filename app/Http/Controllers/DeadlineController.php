@@ -30,8 +30,6 @@ class DeadlineController extends Controller
             'input_deadline_name' => 'required',
             'input_date' => 'required',
             'input_time' => 'required',
-            'input_subject' => 'required',
-            'input_priority' => 'required',
         ]);
         $deadline = new Deadline;
         $deadline->userId = Auth::id();
@@ -60,8 +58,6 @@ class DeadlineController extends Controller
             'input_deadline_name' => 'required',
             'input_date' => 'required',
             'input_time' => 'required',
-            'input_subject' => 'required',
-            'input_priority' => 'required',
         ]);
         $deadline->name = $request->input_deadline_name;
         $deadline->end_date = $request->input_date;

@@ -50,57 +50,9 @@
                     </td>
                     <script>
                         $(document).ready(function(){
-                            $("#delete-{{$subject->id}}").click(function(){
-                                if (confirm("¿De verdad quieres eliminar esta asignatura?")){
-                                    row = $("#row-{{$subject->id}} td");
-                                    $.ajax({
-                                        url: "subjects/{{$subject->id}}/delete",
-                                        method:"DELETE",
-                                        headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
-                                        success: function(result){
-                                            row.hide();
-                                            row.remove();
-                                        },
-                                        error: function(xhr){
-                                            console.log("Ocurrió un error:  " + xhr);
-                                        }
-                                    });
-                                }
-                            });
-                            $("#increment-{{$subject->id}}").click(function(){
-                                absences = $("#absenceNumber-{{$subject->id}}");
-                                value = parseInt(absences.text(), 10);
-                                $.ajax({
-                                    url: "subjects/{{$subject->id}}/increment",
-                                    method: "put",
-                                    headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
-                                    success: function(result){
-                                        value++;
-                                        absences.text(value);
-                                    },
-                                    error: function(xhr){
-                                        console.log("Ocurrió un error:  " + xhr.status);
-                                    }
-                                });
-                            });
-                            $("#decrement-{{$subject->id}}").click(function(){
-                                absences = $("#absenceNumber-{{$subject->id}}");
-                                value = parseInt(absences.text(), 10);
-                                $.ajax({
-                                    url: "subjects/{{$subject->id}}/increment",
-                                    method: "put",
-                                    headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
-                                    success: function(result){
-                                        if (value > 0){
-                                            value--;
-                                        }
-                                        absences.text(value);
-                                    },
-                                    error: function(xhr){
-                                        console.log("Ocurrió un error:  " + xhr.status);
-                                    }
-                                });
-                            });
+                            $("#delete-{{$subject->id}}").click(function(){ deleteSubject({{$subject->id}})});
+                            $("#increment-{{$subject->id}}").click(function(){ increment( {{$subject->id}})});
+                            $("#decrement-{{$subject->id}}").click(function(){ decrement( {{$subject->id}})});
                         });
                     </script>
                 </tr>
