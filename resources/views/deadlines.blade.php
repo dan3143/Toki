@@ -17,7 +17,7 @@
                 <thead >
                     <tr>
                         <th>Nombre</th>
-                        <th>Asignatura</th>
+                        <th style="text-align:center;">Asignatura</th>
                         <th style="text-align:center;">Fecha límite</th>
                         <th style="text-align:center;">Hora</th>
                         <th style="text-align:center;">Prioridad</th>
@@ -27,16 +27,16 @@
                 <tbody>
                 @foreach($deadlines as $deadline)
                 <tr id="row-{{$deadline->id}}">
-                    <td> {{ $deadline->name }} </td>
-                    <td class="{{($isNull = $deadline->subjectId == null) ? 'text-center':''}}"> 
-                        {{ $isNull ? '--' : App\Subject::where('id', $deadline->subjectId)->first()->name }}
+                    <td id="name-{{$deadline->id}}"> {{ $deadline->name }} </td>
+                    <td class="text-center"> 
+                        {{ $deadline->subjectId == null ? '--' : App\Subject::where('id', $deadline->subjectId)->first()->name }}
                     </td>
                     <td style="text-align:center;">
                         <span id="end_date" class="date">{{ date('d/m/Y', strtotime($deadline->end_date))}}</span>
                         <span class="parenthesis">(</span>
                         <span id="remaining-{{$deadline->id}}"></span>
                         <span class="parenthesis">)</span>
-                        <script>remainingDays('{{$deadline->end_date}}' + ' ' +  '{{$deadline->end_hour}}', {{$deadline->id}});</script>
+                        <script>setTimer("{{$deadline->id}}", "{{$deadline->end_date}} {{$deadline->end_hour}}");</script>
                      </td>
                     <td style="text-align:center;"> {{ date('h:i a', strtotime($deadline->end_hour))}}</td>
                     <td style="text-align:center;"> {{ $deadline->priority == 'low' ? 'Baja' :

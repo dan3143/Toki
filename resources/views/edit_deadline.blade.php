@@ -29,9 +29,9 @@
                 </div>
                 <div class="form-group">
                     <label for="input_date">Ingresa la fecha límite</label>
-                    <input type="date" name="input_date" class="form-control @error('input_date') is-invalid @enderror"
+                    <input type="date" id="input_date" name="input_date" class="form-control @error('input_date') is-invalid @enderror"
                         value="{{$deadline->end_date}}">
-                    <script type="text/javascript" src="../minDate.js"></script>
+                    <script>minDate();</script>
                     @error('input_date')
                     <small class="text-danger">Campo requerido</small>
                     @enderror

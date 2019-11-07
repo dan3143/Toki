@@ -36,8 +36,8 @@ function minDate(){
         day = '0' + day;
     d = [year, month, day].join('-');
     picker = document.getElementById('input_date');
-    picker.setAttribute('min', d);
     console.log(picker);
+    picker.setAttribute('min', d);
 }
 
 function disableSubmit() {
@@ -135,7 +135,7 @@ function deleteDeadline(id){
                 row.remove();
             },
             error: function(xhr){
-                console.log("Ocurrió un error:  " + xhr);
+                console.log("Ocurrió un error:  " + xhr.textResponse);
             }
         });
     }
@@ -166,4 +166,54 @@ function deleteGrade(subjectId, gradeId, percentage){
             }
         });
     }
+}
+
+function setTimer(id, end_date){
+    var countDownDate = new Date(end_date).getTime();
+    var about_to_expire = false;
+    var interval = setInterval(function(){
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        time = days + "d " + hours + "h";
+        if (days == 0){
+            time = hours + "h " + minutes + "m";
+            if (hours == 0){
+                time = minutes + "m " + seconds + "s"
+                if (minutes == 0){
+                    time = seconds + "s";
+                }
+            }   
+        }
+        text = document.getElementById("remaining-"+id);
+        text.innerHTML = time;
+        if (distance/(1000*60) <= 15 && !about_to_expire){
+            sendNotification(id);
+            about_to_expire = true;
+        }
+        if (distance < 0){
+            clearInterval(interval);
+            text.innerHTML = "expirada";
+        }
+    }, 1000);
+}
+
+function sendNotification(deadline_id){
+    console.log("Quedan 15 minutos");
+    name_cell = document.getElementById("name-"+deadline_id);
+    if (!("Notification" in window)){
+        console.log("Notifications not available");
+    }else if(Notification.permission === "granted"){
+        var notification = new Notification("Actividad " + name_cell.text() +" a punto de expirar");
+    }else if (Notification.permission !== 'denied'){
+        Notification.requestPermission(function(){
+            if(Notification.permission === "granted"){
+                var notification = new Notification("Actividad " + name_cell.text() +" a punto de expirar");
+            }
+        });
+    }
+    
 }
