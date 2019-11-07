@@ -5289,6 +5289,7 @@ input[type=button].btn-block {
 }
 
 .pagination {
+  
   display: -webkit-box;
   display: flex;
   padding-left: 0;
@@ -5305,20 +5306,23 @@ input[type=button].btn-block {
   color: #3490dc;
   background-color: #fff;
   border: 1px solid #dee2e6;
+  
 }
 
 .page-link:hover {
-  z-index: 2;
+
   color: #1d68a7;
   text-decoration: none;
   background-color: #e9ecef;
   border-color: #dee2e6;
+ 
 }
 
 .page-link:focus {
-  z-index: 2;
+ 
+  z-index: 0;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+ 
 }
 
 .page-item:first-child .page-link {
@@ -5333,7 +5337,7 @@ input[type=button].btn-block {
 }
 
 .page-item.active .page-link {
-  z-index: 1;
+  z-index: -1;
   color: #fff;
   background-color: #3490dc;
   border-color: #3490dc;
