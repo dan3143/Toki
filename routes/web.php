@@ -21,7 +21,17 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/schedule', 'ScheduleController@index')->name('schedule')->middleware('auth');
 Route::get('/settings', 'SettingsController@index')->name('settings')->middleware('auth');
 Route::get('/account', 'AccountController@index')->name('account')->middleware('auth');
+
+//-------User Rooms--------
 Route::get('/user_room', 'UserRoomController@index')->name('user_room')->middleware('auth');
+Route::post('/user_room', 'UserRoomController@store')->name('user_room.store')->middleware('auth', 'admin');
+Route::delete('/user_room/{id}', 'UserRoomController@delete')->name('user_room.delete')->middleware('auth', 'admin');
+Route::put('/user_room/{id}/change_status', 'UserRoomController@change_status')->name('user_room.change_status')->middleware('auth', 'admin');
+Route::get('/user_room_management/{id}', 'UserRoomManagementController@index')->name('user_room_management')->middleware('auth', 'admin');
+Route::post('/user_room_management/{id}', 'UserRoomManagementController@addComputer')->name('user_room_management.add_computer')->middleware('auth', 'admin');
+Route::delete('/user_room_management/delete/{pc_id}', 'UserRoomManagementController@deleteComputer')->name('user_room_management.delete_computer')->middleware('auth', 'admin');
+Route::put('/user_room_management/{pc_id}/change_status', 'UserRoomManagementController@change_status')->middleware('auth', 'admin');
+
 
 //-----------Deadlines-------
 Route::get('/deadlines', 'DeadlineController@index')->name('deadlines')->middleware('auth');

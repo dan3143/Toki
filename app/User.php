@@ -37,7 +37,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     public $primaryKey = 'username';
     public $incrementing = 'false';
     public $keyType = 'string';
+
+    public function isAdmin(){
+        return $this->role == "admin";
+    }
 }
