@@ -35,4 +35,16 @@ class UserRoomController extends Controller
         return $id . " deleted";
     }
 
+    public function update(Request $request){
+        $request->validate([
+            'input_name' => 'required',
+            'input_place' => 'required',
+        ]);
+        $room = UserRoom::findOrFail($request->id);
+        $room->name = $request->input_name;
+        $room->location = $request->input_place;
+        $room->save();
+        return redirect()->route('user_room');
+    }
+
 }

@@ -123,13 +123,13 @@
                 <div class="form-group">
                     <label for="input_start_hour">Hora de inicio</label>
                     <input id="input_start_hour" type="time" name="input_start_hour" class="form-control @error('input_start_hour') is-invalid @enderror" 
-                        placeholder="Ingresa el lugar donde harás la actividad"
+                        placeholder="Ingresa la hora a la que comenzará la actividad"
                         value="">
                 </div>
                 <div class="form-group">
                     <label for="input_end_hour">Hora de fin</label>
                     <input id="input_end_hour" type="time" name="input_end_hour" class="form-control @error('input_end_hour') is-invalid @enderror" 
-                        placeholder="Ingresa el lugar donde harás la actividad"
+                        placeholder="Ingresa la hora a la que terminará la actividad"
                         value="">
                 </div>
             </div>
