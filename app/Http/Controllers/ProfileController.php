@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use App\Rules\MatchOldPassword;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProfileController extends Controller
 {
@@ -40,4 +44,27 @@ class ProfileController extends Controller
         return back();
     }
 
+
+    public function change_password(){
+        return view('change_password');
+    }
+
+    public function delete(){
+        $id = Auth::id();
+        Auth::logout();
+        User::findOrFail($id)->delete();
+        return redirect()->route('welcome');
+    }    
+
+    public function update_password(Request $request){
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => 'required',
+            'confirm_password' => 'required|same:new_password'
+        ]);
+        $user = User::findOrFail(Auth::id());
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        return view('home');
+    }
 }

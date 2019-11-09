@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('title')
+    Editar tarea
+@endsection
+
 @section('content')
 <div class="container justify-content-center">
     <div class="card mx-auto w-75">

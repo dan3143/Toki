@@ -5,6 +5,10 @@ $user = Auth::user();
 
 @extends('layouts.app')
 
+@section('title')
+    Perfil
+@endsection
+
 @section('content')
 <div class="container justify-content-center">
     <div class="card mx-auto w-75">
@@ -35,8 +39,7 @@ $user = Auth::user();
 
                 <div class="row justify-content-center mt-3 mb-5">
                     <div class="custom-file col-5">
-                        <input type="file" class="custom-file-input" name="pic">
-                        <label class="custom-file-label" for="customFile">Elije una imagen</label>
+                        <input type="file" name="pic">
                         @error('pic')
                             <small class="text-danger">Sube una imagen válida. El tamaño debe ser menor a 2MB</small>
                         @enderror
@@ -62,7 +65,7 @@ $user = Auth::user();
 
                 <div class="row justify-content-center my-3">
                     <div class="col-2 my-auto text-right">Contraseña:</div>
-                    <div class="col-4">●●●●●●●●●●●● <a href="#">Cambiar</a></div>
+                    <div class="col-4">●●●●●●●●●●●● <a href="{{route('profile.change_password')}}">Cambiar</a></div>
                 </div>
 
                 <div class="row justify-content-center my-4">
@@ -70,25 +73,36 @@ $user = Auth::user();
                         <button type="submit" class="btn btn-primary">Actualizar</button>
                     </div>
                 </div>
-                <div class="row justify-content-center my-3">
+                <div  class="row justify-content-center my-3">
                     <div class="col-6 text-center">
-                        <a class="text-danger" href="#">Eliminar cuenta</a>
-                    </div>
+                        <a href="{{ route('profile.delete') }}" class="text-danger" 
+                            onclick="event.preventDefault();submit()">
+                            Eliminar cuenta
+                        </a>
+                    </div> 
                 </div>
             </form>
-            
         </div>
     </div>
 </div>
+
+<form id="delete-form" action="{{ route('profile.delete') }}" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
 
 <script>
     $(function(){
         $(".custom-file-input").hide();        
         $(".custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    });
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
     });
     
+    function submit(){
+        document.getElementById('delete-form').submit();
+    }
+
 </script>
 @endsection

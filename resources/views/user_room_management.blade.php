@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    Administrar sala de usuarios
+@endsection
+
 @section('content')
 <div class="container justify-content-center">
     

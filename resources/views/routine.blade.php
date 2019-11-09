@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('title')
+    Rutina
+@endsection
+
 @section('content')
 <div class="container">
     <nav aria-label="Days" >

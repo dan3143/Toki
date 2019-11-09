@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    {{$subject->name}}
+@endsection
+
 @section('content')
 <div class="container">
     <header class="header bg-primary text-white p-4 mx-5">
@@ -42,7 +46,6 @@
                             <i class="fa fa-plus"></i> Agregar nota
                         </button>
                     </td>
-                    
                 </tr>
                 <tr>
                     <td colspan="3" class="text-center">
@@ -87,7 +90,7 @@
                     @error('input_percentage')
                     <small class="text-danger">Campo requerido</small>
                     @enderror
-                </div>
+                </div>  
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" value="Agregar">
