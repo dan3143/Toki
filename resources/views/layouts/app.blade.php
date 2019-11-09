@@ -75,10 +75,16 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() == 'subjects' ? 'active' : ''}}" href="{{ route('subjects') }}">Asignaturas</a>
                             </li>
+                            
+                                
+                            <div style="display:block;margin:auto;" class="ml-3">
+                                <img class="rounded-circle" src="storage/avatars/{{Auth::user()->profile_picture}}" width="30" height="30" alt="{{ Auth::user()->name}}">
+                            </div>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Cuenta</a>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name}}
+                                </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <span class="dropdown-item disabled"><b>{{ Auth::user()->name }}</b></span>
                                     <a class="dropdown-item" href="{{ route('settings') }}">
                                         {{ __('Configuración') }}                                      
                                     </a>

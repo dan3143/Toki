@@ -170,7 +170,6 @@ function deleteGrade(subjectId, gradeId, percentage){
 
 function setTimer(id, end_date){
     var countDownDate = new Date(end_date).getTime();
-    var about_to_expire = false;
     var interval = setInterval(function(){
         var now = new Date().getTime();
         var distance = countDownDate - now;
@@ -178,6 +177,7 @@ function setTimer(id, end_date){
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
         time = days + "d " + hours + "h";
         if (days == 0){
             time = hours + "h " + minutes + "m";
@@ -189,10 +189,13 @@ function setTimer(id, end_date){
             }   
         }
         text = document.getElementById("remaining-"+id);
+        if (text == null){
+            return;
+        }
         text.innerHTML = time;
-        if (distance/(1000*60) <= 15 && !about_to_expire){
+        if ((distance/(1000*60)).toFixed(2) == 15){
+            console.log("Chale");
             sendNotification(id);
-            about_to_expire = true;
         }
         if (distance < 0){
             clearInterval(interval);
@@ -204,16 +207,23 @@ function setTimer(id, end_date){
 function sendNotification(deadline_id){
     console.log("Quedan 15 minutos");
     name_cell = document.getElementById("name-"+deadline_id);
-    if (!("Notification" in window)){
+    if (!Notification){
         console.log("Notifications not available");
-    }else if(Notification.permission === "granted"){
-        var notification = new Notification("Actividad " + name_cell.text() +" a punto de expirar");
-    }else if (Notification.permission !== 'denied'){
-        Notification.requestPermission(function(){
-            if(Notification.permission === "granted"){
-                var notification = new Notification("Actividad " + name_cell.text() +" a punto de expirar");
-            }
-        });
-    }
-    
+        
+    }else{
+        if (Notification.permission !== 'granted'){
+            Notification.requestPermission().then(function(result){
+                console.log(result);
+            });
+        }
+        if (Notification.permission === 'granted'){
+            var notification = new Notification("Una de tus actividades está a punto de expirar",
+            {
+                body: name_cell.textContent + " expirará en 15 minutos",
+                icon: "../images/task.png"
+            });
+        }
+        
+    }   
 }
+

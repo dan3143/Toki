@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/schedule', 'ScheduleController@index')->name('schedule')->middleware('auth');
 Route::get('/settings', 'SettingsController@index')->name('settings')->middleware('auth');
+Route::post('/settings/picture', 'SettingsController@picture')->name('settings.picture')->middleware('auth');
 Route::get('/account', 'AccountController@index')->name('account')->middleware('auth');
 
 //-------User Rooms--------
