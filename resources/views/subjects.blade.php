@@ -15,7 +15,6 @@
                         <th>Nombre</th>
                         <th>Profesor</th>
                         <th style="text-align:center;">Inasistencias</th>
-                        <th style="text-align:center;">Estado</th>
                         <th style="text-align:center;">Acción</th>
                     </tr>
                 </thead>
@@ -32,10 +31,6 @@
                         <button id="increment-{{$subject->id}}" class="btn btn-xs btn-outline-secondary" type="button">
                             <i class="fa fa-plus"></i>
                         </button>
-                    </td>
-                    <td style="text-align:center;">
-                        {{$subject->status == 'studying' ? 'estudiando' :
-                          ($subject->status == 'finished' ? 'finalizada' : 'retirada')}}
                     </td>
                     <td style="text-align:center;">
                         <button id="delete-{{$subject->id}}" class="btn btn-sm btn-outline-danger" type="button">

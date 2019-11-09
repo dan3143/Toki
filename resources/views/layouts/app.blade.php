@@ -67,26 +67,26 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::currentRouteName() == 'schedule' ? 'active' : ''}}" href="{{ route('schedule') }}">Horario</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() == 'deadlines' ? 'active' : ''}}" href="{{ route('deadlines') }}">Tareas</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() == 'subjects' ? 'active' : ''}}" href="{{ route('subjects') }}">Asignaturas</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::currentRouteName() == 'routine' ? 'active' : ''}}" href="{{ route('routine', 'monday') }}">Rutina</a>
+                            </li>
                             
                                 
                             <div style="display:block;margin:auto;" class="ml-3">
-                                <img class="rounded-circle" src="storage/avatars/{{Auth::user()->profile_picture}}" width="30" height="30" alt="{{ Auth::user()->name}}">
+                                <img class="rounded-circle" src="/storage/avatars/{{Auth::user()->profile_picture}}" width="30" height="30" alt="{{ Auth::user()->name}}">
                             </div>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name}}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('settings') }}">
-                                        {{ __('Configuración') }}                                      
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                        {{ __('Perfil') }}                                      
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
