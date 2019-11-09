@@ -11,9 +11,8 @@
 
         <!-- Styles -->
         <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
+            body {
+                background-image: url('unin.png');
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -49,7 +48,11 @@
             }
 
             .content {
+                padding: 20vh 0;
+                padding-left: 1vh;
+                padding-right: 5vh;
                 text-align: center;
+                
             }
 
             .title {
@@ -57,7 +60,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: white;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -122,6 +125,94 @@
                 -moz-animation-delay: 0.3s;
                 animation-delay: 0.3s;
             }
+            .dot2::after {
+                z-index: -1;
+                opacity: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: -8px;
+                left: -8px;
+                right: 0;
+                bottom: 0;
+                content: '';
+                height: 100%;
+                width: 100%;
+                border: 8px solid rgba(0, 0, 0, 0.2);
+                border-radius: 200px 12px 200px 12px;
+                animation-name: ripple;
+                animation-duration: 3s;
+                animation-delay: 0s;
+                animation-iteration-count: infinite;
+                animation-timing-function: cubic-bezier(0.65, 0, 0.34, 1);
+                
+            }
+            .dot2::before {
+                z-index: -1;
+                opacity: 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                top: -8px;
+                left: -8px;
+                right: 0;
+                bottom: 0;
+                content: '';
+                height: 100%;
+                width: 100%;
+                border: 8px solid rgba(0, 0, 0, 0.2);
+                border-radius: 200px 12px 200px 12px;
+                animation-name: ripple;
+                animation-duration: 3s;
+                animation-delay: 0.5s;
+                animation-iteration-count: infinite;
+                animation-timing-function: cubic-bezier(0.65, 0, 0.34, 1);
+                
+            }
+            @keyframes ripple {
+                from {
+                    opacity: 1;
+                    transform: scale3d(0.75, 0.75, 1);
+                    z-index: -1;
+                }
+
+                to {
+                    opacity: 0;
+                    transform: scale3d(1.5, 1.5, 1);
+                    z-index:-1;
+                }
+            }
+        
+
+            .dot {
+                
+                z-index: 1;
+                height: 400px;
+                width: 400px;
+                background-color: white;
+                border-radius: 200px 12px 200px 12px;
+                filter: drop-shadow(0 0 0.75rem black);
+                display: block;
+                
+                
+            }
+            .dot2 {
+                
+                z-index: -1;
+                height: 400px;
+                width: 400px;
+                background-color: white;
+                border-radius: 200px 12px 200px 12px;
+                filter: drop-shadow(0 0 0.75rem rgba(0,0,0,0.5));
+                display: block;
+                
+                
+            }
+            
 
         </style>
     </head>
@@ -141,9 +232,13 @@
                 </div>
             @endif
 
-            <div class="content fade-in one">
-            <img src="{{asset('toki.png')}}" alt="Toki" width="100%" height="100%">
-            </div>
-        </div>
-    </body>
-</html>
+            <div class="dot2">
+                <div class="dot">
+                    <div class="content fade-in one">
+                        <img src="{{asset('toki.png')}}" alt="Toki" width="100%" height="100%">
+                    </div>
+                 </div>
+             </div>
+         </div>
+     </body>
+ </html>
