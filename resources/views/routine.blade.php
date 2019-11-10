@@ -86,7 +86,43 @@
                         placeholder="Ingresa el lugar donde harás la actividad"
                         value="{{old('input_end_hour')}}">
                 </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" id="repeat" name="repeat">Repetir
+                    </label>
+                </div>
+
+                <div id="repeat-section" class="btn-group-toggle text-center" data-toggle="buttons">
+                    <label class="btn btn-light">
+                        <input type="checkbox" autocomplete="off" name="sunday">D
+                    </label>
+
+                    <label class="btn btn-secondary active">
+                        <input type="checkbox" autocomplete="off" checked name="monday">L
+                    </label>
+                    
+                    <label class="btn btn-secondary active">
+                        <input type="checkbox" autocomplete="off" checked name="tuesday">M
+                    </label>
+                
+                    <label class="btn btn-secondary active">
+                        <input type="checkbox" autocomplete="off"  checked name="wednesday">X
+                    </label>
+                
+                    <label class="btn btn-secondary active">
+                        <input type="checkbox" autocomplete="off" checked name="thursday">J
+                    </label>
+
+                    <label class="btn btn-secondary active">
+                        <input type="checkbox" autocomplete="off" checked name="friday">V
+                    </label>
+
+                    <label class="btn btn-light">
+                        <input type="checkbox" autocomplete="off" name="saturday">S
+                    </label>
+                </div>
             </div>
+
             <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" value="Agregar">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>        
@@ -159,6 +195,26 @@
         $("#modal_edit_body #input_start_hour").val(start_hour);
         $("#modal_edit_body #input_end_hour").val(end_hour);
         $("#modal_edit_body #input_place").val(place);
+    });
+
+    $(document).ready(function(){
+        $("#repeat-section").hide();
+        $("#repeat").change(function(){
+            if (this.checked){
+                $("#repeat-section").show();
+            } else {
+                $("#repeat-section").hide();
+            }
+        });
+        $('[data-toggle="buttons"] .btn').on('click', function () {
+            $(this).toggleClass('btn-secondary btn-light active');
+            var $chk = $(this).find('[type=checkbox]');
+            var value = !$chk.prop('checked');
+            console.log(value);
+            $chk.prop('checked', value);
+            return false;
+        });
+
     });
 </script>
 

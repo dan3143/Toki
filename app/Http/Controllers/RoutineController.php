@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 
 class RoutineController extends Controller
 {
+
+    const DAYS =["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    
     public function index(Request $request, $day){
-        $days =["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-        if (!in_array($day, $days)){
+        if (!in_array($day, self::DAYS)){
             abort(404);
         }
         $activities = Activity::where('userId', Auth::id())->where('day', $day)
@@ -38,7 +40,21 @@ class RoutineController extends Controller
         $activity->place = $request->input_place;
         $activity->day = $day;
         $activity->save();
-        return redirect()->route('routine', $day);
+        if ($request->repeat){
+            foreach (self::DAYS as $day_i){
+                if ($request->input($day_i) && $day_i != $day){
+                    $activity = new Activity;
+                    $activity->userId = Auth::id();
+                    $activity->name = $request->input_name;
+                    $activity->end_hour = $request->input_end_hour;
+                    $activity->start_hour = $request->input_start_hour;
+                    $activity->place = $request->input_place;
+                    $activity->day = $day_i;
+                    $activity->save();
+                }
+            }
+        }
+        return redirect()->route('routine', 'monday');
     }
 
     public function update(Request $request, $day){
@@ -49,7 +65,7 @@ class RoutineController extends Controller
         ]);
         $activity = Activity::findOrFail($request->id);
         $activity->name = $request->input_name;
-        $activity->end_hour = $request->input_end_hour;
+        $activity->end_hour = $reques->input_end_hour;
         $activity->start_hour = $request->input_start_hour;
         $activity->place = $request->input_place;
         $activity->day = $day;
