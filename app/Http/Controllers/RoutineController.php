@@ -30,8 +30,16 @@ class RoutineController extends Controller
         $request->validate([
             'input_name' => 'required',
             'input_start_hour' => 'required',
-            'input_end_hour' => 'required',
         ]);
+
+        if (isset($request->input_end_hour) && strtotime($request->input_start_hour) > strtotime($request->input_end_hour)){
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'input_end_hour' => ['La hora de fin debe ser mayor a la hora de inicio'],
+                'input_start_hour' => ['La hora de inicio debe ser menor a la hora de fin']
+            ]);
+            throw $error;
+        }
+
         $activity = new Activity;
         $activity->userId = Auth::id();
         $activity->name = $request->input_name;
@@ -61,11 +69,19 @@ class RoutineController extends Controller
         $request->validate([
             'input_name' => 'required',
             'input_start_hour' => 'required',
-            'input_end_hour' => 'required',
         ]);
+
+        if (isset($request->input_end_hour) && strtotime($request->input_start_hour) > strtotime($request->input_end_hour)){
+            $error = \Illuminate\Validation\ValidationException::withMessages([
+                'input_end_hour' => ['La hora de fin debe ser mayor a la hora de inicio'],
+                'input_start_hour' => ['La hora de inicio debe ser menor a la hora de fin']
+            ]);
+            throw $error;
+        }
+
         $activity = Activity::findOrFail($request->id);
         $activity->name = $request->input_name;
-        $activity->end_hour = $reques->input_end_hour;
+        $activity->end_hour = $request->input_end_hour;
         $activity->start_hour = $request->input_start_hour;
         $activity->place = $request->input_place;
         $activity->day = $day;

@@ -26,9 +26,12 @@
                     $start = date('g:i a', strtotime($activity->start_hour));
                     $end = date('g:i a', strtotime($activity->end_hour));
                 @endphp
-                <b>Hora:</b> {{$start}} a {{$end}}
+                <b>Hora:</b> {{$start}} @isset($activity->end_hour) a {{$end}} @endisset
                 <br>
+                @isset($activity->place)
                 <b>Dónde:</b> {{$activity->place}}
+                @endisset
+                
             </p>
             <button type="button" onclick="deleteCard({{$activity->id}})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
             <a class="edit_link btn btn-sm btn-outline-secondary" data-toggle="modal" href="#modal_edit"
@@ -79,12 +82,18 @@
                     <input id="input_start_hour" type="time" name="input_start_hour" class="form-control @error('input_start_hour') is-invalid @enderror" 
                         placeholder="Ingresa el lugar donde harás la actividad"
                         value="{{old('input_start_hour')}}">
+                    @error('input_start_hour')
+                        <small class="text-danger">La hora de inicio no debe ser mayor a la de fin</small>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="input_end_hour">Hora de fin</label>
                     <input id="input_end_hour" type="time" name="input_end_hour" class="form-control @error('input_end_hour') is-invalid @enderror" 
                         placeholder="Ingresa el lugar donde harás la actividad"
                         value="{{old('input_end_hour')}}">
+                    @error('input_end_hour')
+                        <small class="text-danger">La hora de inicio no debe ser mayor a la de fin</small>
+                    @enderror
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">

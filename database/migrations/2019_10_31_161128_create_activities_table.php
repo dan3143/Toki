@@ -18,7 +18,7 @@ class CreateActivitiesTable extends Migration
             $table->string('userId');
             $table->string('name');
             $table->time('start_hour');
-            $table->time('end_hour');
+            $table->time('end_hour')->nullable();
             $table->string('day');
             $table->string('place')->nullable();
             $table->timestamps();
