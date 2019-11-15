@@ -7,11 +7,13 @@ use Closure;
 
 class CheckPrivileges
 {
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ... $roles)
     {
-        if (!Auth::user()->isAdmin()){
-            abort(403, "No tienes permiso para entrar");
+        foreach ($roles as $role){
+            if (Auth::user()->hasRole($role)){
+                return $next($request);
+            }
         }
-        return $next($request);
+        abort(403, "No tienes permiso para entrar");
     }
 }

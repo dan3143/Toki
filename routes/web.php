@@ -27,17 +27,24 @@ Route::delete('/profile', 'ProfileController@delete')->name('profile.delete')->m
 Route::get('/profile/change_password', 'ProfileController@change_password')->name('profile.change_password')->middleware('auth');
 Route::put('/profile/change_password', 'ProfileController@update_password')->name('profile.update_password')->middleware('auth');
 
+//------- Posts ------
+Route::get('/posts/create', 'PostController@create')->name('posts.create')->middleware('auth', 'role:blogger');
+Route::get('/posts/{id}', 'PostController@show')->name('posts.show')->middleware('auth');
+Route::post('/posts', 'PostController@store')->name('posts.store')->middleware('auth', 'role:blogger');
+Route::get('/posts/{id}/edit', 'PostController@edit')->name('posts.edit')->middleware('auth', 'role:blogger');
+Route::put('/posts/{id}/edit', 'PostController@update')->name('posts.update')->middleware('auth', 'role:blogger');
+Route::delete('/posts/{id}/delete', 'PostController@delete')->name('posts.delete')->middleware('auth', 'role:blogger');
 
 //-------User Rooms--------
 Route::get('/user_room', 'UserRoomController@index')->name('user_room')->middleware('auth');
 Route::post('/user_room', 'UserRoomController@store')->name('user_room.store')->middleware('auth', 'admin');
-Route::delete('/user_room/{id}', 'UserRoomController@delete')->name('user_room.delete')->middleware('auth', 'admin');
-Route::put('/user_room/update', 'UserRoomController@update')->name('user_room.update')->middleware('auth', 'admin');
-Route::put('/user_room/{id}/change_status', 'UserRoomController@change_status')->name('user_room.change_status')->middleware('auth', 'admin');
-Route::get('/user_room_management/{id}', 'UserRoomManagementController@index')->name('user_room_management')->middleware('auth', 'admin');
-Route::post('/user_room_management/{id}', 'UserRoomManagementController@addComputer')->name('user_room_management.add_computer')->middleware('auth', 'admin');
-Route::delete('/user_room_management/delete/{pc_id}', 'UserRoomManagementController@deleteComputer')->name('user_room_management.delete_computer')->middleware('auth', 'admin');
-Route::put('/user_room_management/{pc_id}/change_status', 'UserRoomManagementController@change_status')->middleware('auth', 'admin');
+Route::delete('/user_room/{id}', 'UserRoomController@delete')->name('user_room.delete')->middleware('auth', 'role:admin');
+Route::put('/user_room/update', 'UserRoomController@update')->name('user_room.update')->middleware('auth', 'role:admin');
+Route::put('/user_room/{id}/change_status', 'UserRoomController@change_status')->name('user_room.change_status')->middleware('auth', 'role:admin');
+Route::get('/user_room_management/{id}', 'UserRoomManagementController@index')->name('user_room_management')->middleware('auth', 'role:admin');
+Route::post('/user_room_management/{id}', 'UserRoomManagementController@addComputer')->name('user_room_management.add_computer')->middleware('auth', 'role:admin');
+Route::delete('/user_room_management/delete/{pc_id}', 'UserRoomManagementController@deleteComputer')->name('user_room_management.delete_computer')->middleware('auth', 'role:admin');
+Route::put('/user_room_management/{pc_id}/change_status', 'UserRoomManagementController@change_status')->middleware('auth', 'role:admin');
 
 
 //-----------Deadlines-------

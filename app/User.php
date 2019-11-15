@@ -42,7 +42,7 @@ class User extends Authenticatable
     public $incrementing = 'false';
     public $keyType = 'string';
 
-    public function isAdmin(){
-        return $this->role == "admin";
+    public function hasRole($role){
+        return $this->role === $role;
     }
 }

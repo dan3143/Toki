@@ -37,6 +37,7 @@
                 @else
                     <div id="sidenav" class="sidenav">
                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="{{ route('home') }}" onclick="closeNav()">Home</a>
                         <a href="{{ route('schedule') }}" onclick="closeNav()">Horario</a>
                         <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
                         <a href="{{ route('routine', 'monday') }}" onclick="closeNav()">Rutina</a>
@@ -70,9 +71,6 @@
                         @else
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() == 'deadlines' ? 'active' : ''}}" href="{{ route('deadlines') }}">Tareas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::currentRouteName() == 'subjects' ? 'active' : ''}}" href="{{ route('subjects') }}">Asignaturas</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() == 'routine' ? 'active' : ''}}" href="{{ route('routine', 'monday') }}">Rutina</a>

@@ -20,7 +20,6 @@ class CreateDeadlinesTable extends Migration
             $table->date('end_date');
             $table->time('end_hour');
             $table->bigInteger('subjectId')->unsigned()->nullable();
-            $table->bigInteger('noteId')->unsigned()->nullable();
             $table->enum('priority', ['none', 'low', 'medium', 'high']);
             $table->timestamps();
             $table->foreign('userId')
@@ -29,9 +28,6 @@ class CreateDeadlinesTable extends Migration
             $table->foreign('subjectId')
                   ->references('id')->on('subjects')
                   ->onDelete('cascade');
-            $table->foreign('noteId')
-                  ->references('id')->on('notes')
-                  ->onDelete('set null');                  
         });
     }
 

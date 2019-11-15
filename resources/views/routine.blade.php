@@ -23,15 +23,22 @@
             <h5>{{$activity->name}}</h5>
             <p>
                 @php
-                    $start = date('g:i a', strtotime($activity->start_hour));
-                    $end = date('g:i a', strtotime($activity->end_hour));
+                    $start = new DateTime($activity->start_hour);
+                    $end = new DateTime($activity->end_hour);
+                    $diff = $end->diff($start);
+                    if ($diff->h == 0){
+                        $diff = $diff->i . ($diff->i=='1'?' minuto' : ' minutos');
+                    }else{
+                        $diff = $diff->h . ($diff->h=='1'?' hora' : ' horas');
+                    }
+                    $start = $start->format('g:i a') ;
+                    $end = $end->format('g:i a');
                 @endphp
-                <b>Hora:</b> {{$start}} @isset($activity->end_hour) a {{$end}} @endisset
+                {{$start}} @isset($activity->end_hour) - {{$end}} ({{$diff}}) @endisset 
                 <br>
                 @isset($activity->place)
-                <b>Dónde:</b> {{$activity->place}}
+                En {{$activity->place}}
                 @endisset
-                
             </p>
             <button type="button" onclick="deleteCard({{$activity->id}})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
             <a class="edit_link btn btn-sm btn-outline-secondary" data-toggle="modal" href="#modal_edit"

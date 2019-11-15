@@ -141,6 +141,23 @@ function deleteDeadline(id){
     }
 }
 
+function deletePost(id){
+    if (confirm("¿De verdad quieres eliminar este post?")){
+        card = $("#card-"+id);
+        $.ajax({
+            url: "posts/"+id+"/delete",
+            method:"DELETE",
+            headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+            success: function(result){
+                card.remove();
+            },
+            error: function(xhr){
+                console.log("Ocurrió un error:  " + xhr.textResponse);
+            }
+        });
+    }
+}
+
 function deleteGrade(subjectId, gradeId, percentage){
     if (confirm("¿De verdad quieres eliminar esta nota?")){
         row = $("#row-"+gradeId+" td");;

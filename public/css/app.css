@@ -17021,3 +17021,14 @@ readers do not read off random characters that represent icons */
   bottom: 50px;
   right: 50px;
 }
+
+#textarea-div {
+  background: white;
+  border: 1px solid #ced4da;
+  height: 400px;
+  overflow: auto;
+  padding: 10px;
+  resize: both;
+  width: 100%;
+  border-radius: .2rem;
+}
