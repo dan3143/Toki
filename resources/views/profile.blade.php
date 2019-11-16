@@ -67,6 +67,16 @@ $user = Auth::user();
                     <div class="col-2 my-auto text-right">Contraseña:</div>
                     <div class="col-4">●●●●●●●●●●●● <a href="{{route('profile.change_password')}}">Cambiar</a></div>
                 </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-2 my-auto text-right">e-notificar:</div>
+                        <div class="col-4"> 
+                        <a href="{{ route('email.basic_email') }}" class="btn btn-sm btn-primary float-right">
+                            probar
+                        </a>
+                        
+                    </div>
+                </div>
+
 
                 <div class="row justify-content-center my-4">
                     <div class="form-group">
