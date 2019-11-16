@@ -67,3 +67,6 @@ Route::get('/routine/{day}', 'RoutineController@index')->name('routine')->middle
 Route::post('/routine/{day}', 'RoutineController@store')->name('routine.store')->middleware('auth');
 Route::put('/routine/{day}', 'RoutineController@update')->name('routine.update')->middleware('auth');
 Route::delete('/routine/{id}/delete', 'RoutineController@delete')->name('routine.delete')->middleware('auth');
+
+//--------email---------
+Route::get('/email','MailController@basic_email')->name('email.basic_email');
