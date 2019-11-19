@@ -89,7 +89,7 @@ class DeadlineController extends Controller
             $imported->userId = Auth::id();
             $imported->name = $deadline->name;
             $imported->end_date = $deadline->end_date;
-            $imported->start_date = $deadline->start_date;
+            $imported->end_hour = $deadline->end_hour;
             $imported->subjectId = $deadline->subjectId;
             $imported->priority = $deadline->priority;
             $imported->isPrivate = $deadline->isPrivate;

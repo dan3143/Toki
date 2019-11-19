@@ -1,3 +1,9 @@
+@php
+    if (isset($user)){
+        $deadlines = App\Deadline::where('userId', $user->username)->get();
+    }
+@endphp
+
 @extends('layouts.app')
 
 @section('title')
@@ -9,9 +15,12 @@
     <div class="card">
         <div class="card-header">
             <span class ="align-self-center" >Tus tareas</span>
+            @isset($user)
+            @else
             <a href="{{ route('deadlines.create') }}" class="btn btn-sm btn-primary float-right">
                 Nueva tarea
             </a>
+            @endisset
             <div class="custom-control custom-switch float-right mr-4">
                 <input type="checkbox" class="custom-control-input" id="show_dates">
                 <label class="custom-control-label" for="show_dates">Mostrar fechas</label>
@@ -48,12 +57,16 @@
                                                       ($deadline->priority == 'medium' ? 'Medianas' : 
                                                       ($deadline->priority == 'high' ? 'Alta' : '--'))}} </td>
                     <td width="10%" style="text-align:center;">
+                        @isset($user)
+                        <button onclick="importDeadline({{$deadline->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
+                        @else
                         <button id="delete-{{$deadline->id}}" class="btn btn-sm btn-outline-danger" type="button">
                             <i class="fa fa-trash"></i>
                         </button>
                         <a class="btn btn-sm btn-outline-secondary" type="a" href="{{ route('deadlines.edit', $deadline->id) }}">
                             <i class="fa fa-pen"></i>
                         </a>
+                        @endisset
                     </td>
                 </tr>
                 <script>

@@ -172,6 +172,20 @@ function importActivity(id){
     });
 }
 
+function importDeadline(id){
+    $.ajax({
+        url: "/deadlines/"+id+"/import",
+        method:"POST",
+        headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+        success: function(result){
+            alert('Actividad importada');
+        },
+        error: function(xhr){
+            console.log("Ocurrió un error:  " + xhr.responseText);
+        }
+    });
+}
+
 function setTimer(id, end_date){
     var countDownDate = new Date(end_date).getTime();
     var interval = setInterval(function(){

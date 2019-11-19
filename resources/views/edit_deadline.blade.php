@@ -52,6 +52,7 @@
                 <div class="form-group">
                     <label for="input_subject">Asignatura</label>
                     <select class="form-control @error('input_subject') is-invalid @enderror" name="input_subject">
+                        <option value="" {{$deadline->subjectId == null ? 'selected':'' }}>Ninguna</option>
                         @foreach ($subjects as $subject)
                         <option {{$subject->id == $deadline->subjectId ? 'selected' : ''}} value="{{$subject->id}}">{{$subject->name}}</option>
                         @endforeach        
