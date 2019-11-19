@@ -77,7 +77,7 @@
                     <label class="form-check-label" for="check_private">Privada</label>
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Crear">
+                    <input type="submit" id="submit" class="btn btn-primary" value="Crear">
                     <a class="text-danger" style="margin-left: 15px;font-size:15px;" href="{{route('deadlines')}}">Cancelar</a>
                 </div>
             </form>

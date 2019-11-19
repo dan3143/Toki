@@ -46,7 +46,7 @@ class DeadlineController extends Controller
     }
 
     public function delete($id){
-        $deadline = findOrFail($id);
+        $deadline = Deadline::findOrFail($id);
         if($deadline->userId === Auth::id()){
             Deadline::findOrFail($id)->delete();
             return $id . " deleted";

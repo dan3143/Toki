@@ -31,15 +31,9 @@ function minDate(){
 }
 
 function disableSubmit() {
-  var allowSubmit = true;
-  frm = document.getElementById('form');
-  frm.onsubmit = function () {
-  if (allowSubmit)
-      allowSubmit = false;
-  else 
-      return false;
-  }
-};
+    $("input[type=submit]").attr("disabled", true);
+    return true;
+}
 
 function deleteActivity(id){
     if (confirm("¿De verdad quieres eliminar esta actividad?")){
@@ -58,23 +52,20 @@ function deleteActivity(id){
 }
 
 function deleteSubject(id){
-  $("#delete-"+id).click(function(){
     if (confirm("¿De verdad quieres eliminar esta asignatura?")){
-        row = $("#row-"+id+" td");
+        row = $("#subject-"+id);
         $.ajax({
             url: "subjects/"+id+"/delete",
             method:"DELETE",
             headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
             success: function(result){
-                row.hide();
                 row.remove();
             },
             error: function(xhr){
                 console.log("Ocurrió un error:  " + xhr);
             }
         });
-    }
-  });
+}
 }
 
 function increment(id){
@@ -98,7 +89,7 @@ function decrement(id){
   absences = $("#absenceNumber-"+id);
   value = parseInt(absences.text(), 10);
   $.ajax({
-      url: "subjects/"+id+"/increment",
+      url: "subjects/"+id+"/decrement",
       method: "put",
       headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
       success: function(result){
@@ -115,7 +106,7 @@ function decrement(id){
 
 function deleteDeadline(id){
     if (confirm("¿De verdad quieres eliminar esta tarea?")){
-        row = $("#row-"+id+" td");
+        row = $("#deadline-"+id);
         $.ajax({
             url: "deadlines/"+id+"/delete",
             method:"DELETE",
@@ -125,7 +116,7 @@ function deleteDeadline(id){
                 row.remove();
             },
             error: function(xhr){
-                console.log("Ocurrió un error:  " + xhr.textResponse);
+                console.log("Ocurrió un error:  " + xhr.responseText);
             }
         });
     }
@@ -211,10 +202,6 @@ function setTimer(id, end_date){
             return;
         }
         text.innerHTML = time;
-        if ((distance/(1000*60)).toFixed(2) == 15){
-            console.log("Chale");
-            sendNotification(id);
-        }
         if (distance < 0){
             clearInterval(interval);
             text.innerHTML = "expirada";
