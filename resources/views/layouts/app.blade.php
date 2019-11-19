@@ -22,43 +22,32 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/sidenav.css') }}" rel="stylesheet">
      
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                @guest
-                @else
-                    <div id="sidenav" class="sidenav">
-                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                        <a href="{{ route('schedule') }}" onclick="closeNav()">Horario</a>
-                        <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
-                        <a href="{{ route('routine', ['day'=>'monday']) }}" onclick="closeNav()">Rutina</a>
-                        <a href="{{ route('user_room') }}" onclick="closeNav()">Disponibilidad de salas</a>
-                        <a href="{{ route('subjects') }}" onclick="closeNav()">Asignaturas</a>
-                    </div>
-                    <a class="navbar-brand" type="a" onclick="openNav()">
-                        <i class="fa fa-bars"></i>
-                        <img src="{{asset('toki.png')}}" alt="Toki" width="15%" height="15%">
-                    </a>
-                    <button class="navbar-toggler" type="a" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                @endguest
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item my-auto">
+                            <form method="GET">
+                                <input type="text" placeholder="Buscar..." name="search">
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav">
                         <!-- Authentication Links -->
                         @guest
+                        
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar') }}</a>
                             </li>
@@ -67,7 +56,7 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
                                 </li>
                             @endif
-                        @else
+                        @else            
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() == 'deadlines' ? 'active' : ''}}" href="{{ route('deadlines') }}">Tareas</a>
                             </li>
@@ -76,17 +65,18 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() == 'routine' ? 'active' : ''}}" href="{{ route('routine', ['day' => 'monday']) }}">Rutina</a>
-                            </li>
-                            
-                                
-                            <div style="display:block;margin:auto;" class="ml-3">
-                                <img class="rounded-circle" src="/storage/avatars/{{Auth::user()->profile_picture}}" width="30" height="30" alt="{{ Auth::user()->name}}">
-                            </div>
+                            </li>           
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name}}
+                                    <img class="rounded-circle" src="/storage/avatars/{{Auth::user()->profile_picture}}" width="30" height="30" alt="{{ Auth::user()->name}}">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('schedule') }}" class="dropdown-item">Horario</a>
+                                    <a href="{{ route('deadlines') }}" class="dropdown-item">Tareas</a>
+                                    <a href="{{ route('routine', ['day'=>'monday']) }}" class="dropdown-item">Rutina</a>
+                                    <a href="{{ route('user_room') }}" class="dropdown-item">Disponibilidad de salas</a>
+                                    <a href="{{ route('subjects') }}" class="dropdown-item">Asignaturas</a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('user') }}">
                                         {{ __('Configuración de perfil') }}                                      
                                     </a>
