@@ -39,7 +39,7 @@
                         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                         <a href="{{ route('schedule') }}" onclick="closeNav()">Horario</a>
                         <a href="{{ route('deadlines') }}" onclick="closeNav()">Tareas</a>
-                        <a href="{{ route('routine', 'monday') }}" onclick="closeNav()">Rutina</a>
+                        <a href="{{ route('routine', ['day'=>'monday']) }}" onclick="closeNav()">Rutina</a>
                         <a href="{{ route('user_room') }}" onclick="closeNav()">Disponibilidad de salas</a>
                         <a href="{{ route('subjects') }}" onclick="closeNav()">Asignaturas</a>
                     </div>
@@ -75,7 +75,7 @@
                                 <a class="nav-link {{ Route::currentRouteName() == 'subjects' ? 'active' : ''}}" href="{{ route('subjects') }}">Asignaturas</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::currentRouteName() == 'routine' ? 'active' : ''}}" href="{{ route('routine', 'monday') }}">Rutina</a>
+                                <a class="nav-link {{ Route::currentRouteName() == 'routine' ? 'active' : ''}}" href="{{ route('routine', ['day' => 'monday']) }}">Rutina</a>
                             </li>
                             
                                 
@@ -88,7 +88,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('user') }}">
-                                        {{ __('Perfil') }}                                      
+                                        {{ __('Configuración de perfil') }}                                      
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

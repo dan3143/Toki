@@ -45,43 +45,56 @@ class DeadlineController extends Controller
     }
 
     public function delete($id){
-        Deadline::findOrFail($id)->delete();
-        return $id . " deleted";
+        $deadline = findOrFail($id);
+        if($deadline->userId === Auth::id()){
+            Deadline::findOrFail($id)->delete();
+            return $id . " deleted";
+        }
+        abort(403, "You can't delete someone else's deadline");
     }
 
     public function edit($id){
         $deadline = Deadline::findOrFail($id);
-        return view('edit_deadline', ['deadline' => $deadline, "subjects" => Subject::where('userId', Auth::id())->get()]);
+        if($deadline->userId === Auth::id()){
+            return view('edit_deadline', ['deadline' => $deadline, "subjects" => Subject::where('userId', Auth::id())->get()]);
+        }
+        abort(403, "You cannot edit someone else's deadline");
     }
 
     public function update(Request $request, $id){
         $deadline = Deadline::findOrFail($id);
-        $request->validate([
-            'input_deadline_name' => 'required',
-            'input_date' => 'required',
-            'input_time' => 'required',
-        ]);
-        $deadline->name = $request->input_deadline_name;
-        $deadline->end_date = $request->input_date;
-        $deadline->end_hour = $request->input_time;
-        $deadline->subjectId = $request->input_subject;
-        $deadline->priority = $request->input_priority;
-        $deadline->save();
-        return redirect()->route('deadlines');
+        if (Auth::id() === $deadline->userId){
+            $request->validate([
+                'input_deadline_name' => 'required',
+                'input_date' => 'required',
+                'input_time' => 'required',
+            ]);
+            $deadline->name = $request->input_deadline_name;
+            $deadline->end_date = $request->input_date;
+            $deadline->end_hour = $request->input_time;
+            $deadline->subjectId = $request->input_subject;
+            $deadline->priority = $request->input_priority;
+            $deadline->save();
+            return redirect()->route('deadlines');
+        }
+        abort(403, "You can't update someone else's deadline");
     }
 
     public function import($id){
         $deadline = Deadline::findOrFail($id);
-        $imported = new Deadline;
-        $imported->userId = Auth::id();
-        $imported->name = $deadline->name;
-        $imported->end_date = $deadline->end_date;
-        $imported->start_date = $deadline->start_date;
-        $imported->subjectId = $deadline->subjectId;
-        $imported->priority = $deadline->priority;
-        $imported->isPrivate = $deadline->isPrivate;
-        $imported->save();
-        return $id . " imported";
+        if (!$deadline->isPrivate){
+            $imported = new Deadline;
+            $imported->userId = Auth::id();
+            $imported->name = $deadline->name;
+            $imported->end_date = $deadline->end_date;
+            $imported->start_date = $deadline->start_date;
+            $imported->subjectId = $deadline->subjectId;
+            $imported->priority = $deadline->priority;
+            $imported->isPrivate = $deadline->isPrivate;
+            $imported->save();
+            return $id . " imported";
+        }
+        abort(403, "You cannot import private deadlines");
     }
 
 }

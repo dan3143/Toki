@@ -51,17 +51,17 @@ function disableSubmit() {
   }
 };
 
-function deleteCard(id){
+function deleteActivity(id){
     if (confirm("¿De verdad quieres eliminar esta actividad?")){
       $.ajax({
-          url: id+"/delete",
+          url: "/routine/"+id+"/delete",
           method:"DELETE",
           headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
           success: function(result){
               $("#card-"+id).remove();
           },
           error: function(xhr){
-              console.log("Ocurrió un error:  " + xhr.status);
+              console.log("Ocurrió un error:  " + xhr.responseText);
           }
       });
   }        
@@ -162,7 +162,7 @@ function deleteGrade(subjectId, gradeId, percentage){
                 $("#current_grade").text(result);
             },
             error: function(xhr){
-                console.log("Ocurrió un error:  " + xhr.status);
+                console.log("Ocurrió un error:  " + xhr.responseText);
             }
         });
     }
@@ -177,7 +177,7 @@ function importActivity(id){
             alert('Actividad importada');
         },
         error: function(xhr){
-            console.log("Ocurrió un error:  " + xhr.status);
+            console.log("Ocurrió un error:  " + xhr.responseText);
         }
     });
 }

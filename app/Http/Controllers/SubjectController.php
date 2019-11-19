@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Grade;
 use App\Subject;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-
     public function index(Request $request, $id=null)
     {
         return view('subjects', ['subjects' => Subject::where('userId', Auth::id())->get(), 'user' => $id==null?null:User::findOrFail($id)]);
@@ -39,58 +39,81 @@ class SubjectController extends Controller
             'input_value' => 'required',
             'input_percentage' => 'required'
         ]);
-        $grade = new Grade;
-        $grade->userId = Auth::id();
-        $grade->subjectId = $id;
-        $grade->value = $request->input_value;
-        $grade->percentage = $request->input_percentage;
-        $grade->save();
-        return redirect()->route('subjects.show', $id);
+        $subject = Subject::findOrFail($id);
+        if($subject->userId === Auth::id()){
+            $grade = new Grade;
+            $grade->userId = Auth::id();
+            $grade->subjectId = $id;
+            $grade->value = $request->input_value;
+            $grade->percentage = $request->input_percentage;
+            $grade->save();
+            return redirect()->route('subjects.show', $id);
+        }
+        abort(403, "You cannot add grades to someone else's subject");
     }
 
     public function delete_grade($subjectId, $id){
-        Grade::findOrFail($id)->delete();
-        $grades = Grade::where('userId', Auth::id())->where('subjectId', $subjectId);
-        return $grades->sum(DB::raw('value * (percentage/100)'));
+        $grade = Grade::findOrFail($id);
+        if ($grade->userId === Auth::id()){
+            $grade->delete();
+            $grades = Grade::where('userId', Auth::id())->where('subjectId', $subjectId);
+            return $grades->sum(DB::raw('value * (percentage/100)'));
+        }
+        abort(403, "You cannot delete someone else's grade");
     }
 
     public function delete($id){
-        Subject::findOrFail($id)->delete();
-        return $id . " deleted";
+        $subject = Subject::findOrFail($id);
+        if ($subject->userId === Auth::id()){
+            $subject->delete();
+            return $id . " deleted";
+        }
+        abort(403, "You cannot delete someone else's subject");
     }
 
     public function edit($id){
         $subject = Subject::findOrFail($id);
-        return view('edit_subject', ['subject' => $subject]);
+        if ($subject->userId === Auth::id()){
+            return view('edit_subject', ['subject' => $subject]);
+        }
+        abort(403, "You cannot edit someone else's subject");
     }
 
     public function update(Request $request, $id){
-        
         $subject = Subject::findOrFail($id);
-        $request->validate([
-            'input_subject_name' => 'required',
-            'input_status' => 'required',
-        ]);
-        $subject->name = $request->input_subject_name;
-        $subject->teacherName = $request->input_teacher_name;
-        $subject->absenceMax = $request->input_max_absences;
-        $subject->status = $request->input_status;
-        $subject->save();
-        return redirect()->route('subjects');
+        if ($subject->userId === Auth::id()){
+            $request->validate([
+                'input_subject_name' => 'required',
+                'input_status' => 'required',
+            ]);
+            $subject->name = $request->input_subject_name;
+            $subject->teacherName = $request->input_teacher_name;
+            $subject->absenceMax = $request->input_max_absences;
+            $subject->status = $request->input_status;
+            $subject->save();
+            return redirect()->route('subjects');
+        }
+        abort(403, "You cannot update someone else's subject");
     }
 
     public function increment($id){
         $subject = Subject::findOrFail($id);
-        $subject->absenceNumber++;
-        $subject->save();
-        return $id . " incremented";
+        if ($subject->userId === Auth::id()){
+            $subject->absenceNumber++;
+            $subject->save();
+            return $id . " incremented";
+        }
+        abort(403, "You cannot increment someone else's absences");
     }
 
     public function decrement($id){
         $subject = Subject::findOrFail($id);
-        $subject->absenceNumber--;
-        $subject->save();
-        return $id . " decremented";
+        if ($subject->userId === Auth::id()){
+            $subject->absenceNumber--;
+            $subject->save();
+            return $id . " decremented";
+        }
+        abort(403, "You cannot decrement someone else's absences");
     }
 
     public function show($id){

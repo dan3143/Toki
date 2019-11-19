@@ -23,8 +23,12 @@ class RoutineController extends Controller
     }
 
     public function delete($id){
-        Activity::findOrFail($id)->delete();
-        return $id . " deleted";
+        $activity = Activity::findOrFail($id);
+        if ($activity->userId === Auth::id()){
+            $activity->delete();
+            return $id . " deleted";
+        }
+        abort(403, "You cannot delete someone else's activity");
     }
 
     public function store(Request $request, $day){
@@ -67,40 +71,46 @@ class RoutineController extends Controller
     }
 
     public function update(Request $request, $day){
-        $request->validate([
-            'input_name' => 'required',
-            'input_start_hour' => 'required',
-        ]);
-
-        if (isset($request->input_end_hour) && strtotime($request->input_start_hour) > strtotime($request->input_end_hour)){
-            $error = \Illuminate\Validation\ValidationException::withMessages([
-                'input_end_hour' => ['La hora de fin debe ser mayor a la hora de inicio'],
-                'input_start_hour' => ['La hora de inicio debe ser menor a la hora de fin']
-            ]);
-            throw $error;
-        }
-
         $activity = Activity::findOrFail($request->id);
-        $activity->name = $request->input_name;
-        $activity->end_hour = $request->input_end_hour;
-        $activity->start_hour = $request->input_start_hour;
-        $activity->place = $request->input_place;
-        $activity->day = $day;
-        $activity->save();
-        return redirect()->route('routine', $day);
+        if ($activity->userId === Auth::id()){
+            $request->validate([
+                'input_name' => 'required',
+                'input_start_hour' => 'required',
+            ]);
+            if (isset($request->input_end_hour) && strtotime($request->input_start_hour) > strtotime($request->input_end_hour)){
+                $error = \Illuminate\Validation\ValidationException::withMessages([
+                    'input_end_hour' => ['La hora de fin debe ser mayor a la hora de inicio'],
+                    'input_start_hour' => ['La hora de inicio debe ser menor a la hora de fin']
+                ]);
+                throw $error;
+            }
+    
+            
+            $activity->name = $request->input_name;
+            $activity->end_hour = $request->input_end_hour;
+            $activity->start_hour = $request->input_start_hour;
+            $activity->place = $request->input_place;
+            $activity->day = $day;
+            $activity->save();
+            return redirect()->route('routine', $day);
+        }
+        abort(403, "You cannot update someone else's activity");
     }
 
     public function import($id){
         $activity = Activity::findOrFail($id);
-        $imported = new Activity;
-        $imported->userId = Auth::id();
-        $imported->name = $activity->name;
-        $imported->end_hour = $activity->end_hour;
-        $imported->start_hour = $activity->start_hour;
-        $imported->place = $activity->place;
-        $imported->day = $activity->day;
-        $imported->save();
-        return $id . " imported";
+        if (!$activity->isPrivate){
+            $imported = new Activity;
+            $imported->userId = Auth::id();
+            $imported->name = $activity->name;
+            $imported->end_hour = $activity->end_hour;
+            $imported->start_hour = $activity->start_hour;
+            $imported->place = $activity->place;
+            $imported->day = $activity->day;
+            $imported->save();
+            return $id . " imported";
+        }
+        abort(403, "You cannot import private activities");
     }
 
 }

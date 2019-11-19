@@ -42,8 +42,8 @@ Route::delete('/user_room_management/delete/{pc_id}', 'UserRoomManagementControl
 Route::put('/user_room_management/{pc_id}/change_status', 'UserRoomManagementController@change_status')->middleware('auth', 'admin');
 
 //-----------Deadlines-------
-Route::get('/deadlines/{id?}', 'DeadlineController@index')->name('deadlines')->middleware('auth');
 Route::get('/deadlines/create', 'DeadlineController@create')->name('deadlines.create')->middleware('auth');
+Route::get('/deadlines/{id?}', 'DeadlineController@index')->name('deadlines')->middleware('auth');
 Route::post('/deadlines', 'DeadlineController@store')->name('deadlines.store')->middleware('auth');
 Route::delete('/deadlines/{id}/delete', 'DeadlineController@delete')->name('deadlines.delete')->middleware('auth');
 Route::get('/deadlines/{id}/edit', 'DeadlineController@edit')->name('deadlines.edit')->middleware('auth');
@@ -51,8 +51,8 @@ Route::put('/deadlines/{id}/update', 'DeadlineController@update')->name('deadlin
 Route::post('/deadlines/{id}/import', 'DeadlineController@import')->name('deadlines.import')->middleware('auth');
 
 //----------Subjects--------
-Route::get('/subjects/{id?}', 'SubjectController@index')->name('subjects')->middleware('auth');
 Route::get('/subjects/create_subject', 'SubjectController@create')->name('subjects.create')->middleware('auth');
+Route::get('/subjects/{id?}', 'SubjectController@index')->name('subjects')->middleware('auth');
 Route::get('/subjects/{id}/show', 'SubjectController@show')->name('subjects.show')->middleware('auth');
 Route::post('/subjects', 'SubjectController@store')->name('subjects.store')->middleware('auth');
 Route::post('/subjects/{id}/add_grade', 'SubjectController@addGrade')->name('subjects.add_grade')->middleware('auth');
