@@ -25,7 +25,7 @@ $user = Auth::user();
                     </ul>
                 </div>
             @endif
-            <form method="post" enctype="multipart/form-data" action="{{route('profile.update')}}">
+            <form method="post" enctype="multipart/form-data" action="{{route('user.update')}}">
                 @csrf
 
                 <div class="row justify-content-center">
@@ -65,7 +65,7 @@ $user = Auth::user();
 
                 <div class="row justify-content-center my-3">
                     <div class="col-2 my-auto text-right">Contraseña:</div>
-                    <div class="col-4">●●●●●●●●●●●● <a href="{{route('profile.change_password')}}">Cambiar</a></div>
+                    <div class="col-4">●●●●●●●●●●●● <a href="{{route('user.change_password')}}">Cambiar</a></div>
                 </div>
                 <div class="row justify-content-center my-3">
                     <div class="col-2 my-auto text-right">e-notificar:</div>
@@ -85,7 +85,7 @@ $user = Auth::user();
                 </div>
                 <div  class="row justify-content-center my-3">
                     <div class="col-6 text-center">
-                        <a href="{{ route('profile.delete') }}" class="text-danger" 
+                        <a href="{{ route('user.delete') }}" class="text-danger" 
                             onclick="event.preventDefault();submit()">
                             Eliminar cuenta
                         </a>
@@ -96,7 +96,7 @@ $user = Auth::user();
     </div>
 </div>
 
-<form id="delete-form" action="{{ route('profile.delete') }}" method="POST" style="display: none;">
+<form id="delete-form" action="{{ route('user.delete') }}" method="POST" style="display: none;">
     @csrf
     @method('DELETE')
 </form>

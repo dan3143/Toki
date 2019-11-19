@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 
-class ProfileController extends Controller
+class UserController extends Controller
 {
     public function index(Request $request){
-        return view('profile');
+        return view('user');
     }
 
     public function update(Request $request){

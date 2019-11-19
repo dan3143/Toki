@@ -14,7 +14,7 @@ class MailController extends Controller {
       $to = $user ->email;
       $name = $user->name;
       mail($to,"¡Hola $name!","Esto es una prueba o(≧▽≦)o",$headers);
-      return redirect()->route('profile');;
+      return redirect()->route('user');;
    }
    
 }

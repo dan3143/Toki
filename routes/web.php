@@ -21,12 +21,13 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/schedule', 'ScheduleController@index')->name('schedule')->middleware('auth');
 
 //------- User --------
-Route::get('/profile', 'ProfileController@index')->name('profile')->middleware('auth');
-Route::post('/profile', 'ProfileController@update')->name('profile.update')->middleware('auth');
-Route::delete('/profile', 'ProfileController@delete')->name('profile.delete')->middleware('password.confirm');
-Route::get('/profile/change_password', 'ProfileController@change_password')->name('profile.change_password')->middleware('auth');
-Route::put('/profile/change_password', 'ProfileController@update_password')->name('profile.update_password')->middleware('auth');
+Route::get('/user', 'UserController@index')->name('user')->middleware('auth');
+Route::post('/user', 'UserController@update')->name('user.update')->middleware('auth');
+Route::delete('/user', 'UserController@delete')->name('user.delete')->middleware('password.confirm');
+Route::get('/user/change_password', 'UserController@change_password')->name('user.change_password')->middleware('auth');
+Route::put('/user/change_password', 'UserController@update_password')->name('user.update_password')->middleware('auth');
 
+//------- Other users ------
 
 //-------User Rooms--------
 Route::get('/user_room', 'UserRoomController@index')->name('user_room')->middleware('auth');
