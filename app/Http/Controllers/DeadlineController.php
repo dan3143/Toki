@@ -70,6 +70,18 @@ class DeadlineController extends Controller
         return redirect()->route('deadlines');
     }
 
-    
+    public function import($id){
+        $deadline = Deadline::findOrFail($id);
+        $imported = new Deadline;
+        $imported->userId = Auth::id();
+        $imported->name = $deadline->name;
+        $imported->end_date = $deadline->end_date;
+        $imported->start_date = $deadline->start_date;
+        $imported->subjectId = $deadline->subjectId;
+        $imported->priority = $deadline->priority;
+        $imported->isPrivate = $deadline->isPrivate;
+        $imported->save();
+        return $id . " imported";
+    }
 
 }

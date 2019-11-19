@@ -6,48 +6,107 @@
 
 @section('content')
 <div class="container">
-    <nav aria-label="Days" >
-        <ul class="pagination justify-content-center">
-            <li class="page-item {{$day=="sunday" ? 'active':''}}"><a class="page-link" href="{{route('routine', 'sunday')}}">Domingo</a></li>
-            <li class="page-item {{$day=="monday" ? 'active':''}}"><a class="page-link" href="{{route('routine', 'monday')}}">Lunes</a></li>
-            <li class="page-item {{$day=="tuesday" ? 'active':''}}"><a class="page-link" href="{{route('routine', 'tuesday')}}">Martes</a></li>
-            <li class="page-item {{$day=="wednesday" ? 'active':''}}"><a class="page-link" href="{{route('routine', 'wednesday')}}">Miércoles</a></li>
-            <li class="page-item {{$day=="thursday" ? 'active':''}} "><a class="page-link" href="{{route('routine', 'thursday')}}">Jueves</a></li>
-            <li class="page-item {{$day=="friday" ? 'active':''}}"><a class="page-link" href="{{route('routine', 'friday')}}">Viernes</a></li>
-            <li class="page-item {{$day=="saturday" ? 'active':''}}"><a class="page-link" href="{{route('routine', 'saturday')}}">Sábado</a></li>
-        </ul>
-    </nav>
+    @isset($user)
+        @php
+         $activities = App\Activity::where('userId', $user->username)->where('day', $day)
+                                                           ->orderBy('start_hour', 'asc')
+                                                           ->get();     
+        @endphp
+
+        <p class="text-center h2">Rutina de {{$user->username}}</p>
+        <nav aria-label="Days">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {{$day=="sunday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', ['day'=>'sunday', 'id'=>$user->username])}}">Domingo</a>
+                </li>
+                <li class="page-item {{$day=="monday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', ['day'=>'monday', 'id'=>$user->username])}}">Lunes</a>
+                </li>
+                <li class="page-item {{$day=="tuesday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', ['day'=>'tuesday', 'id'=>$user->username])}}">Martes</a>
+                </li>
+                <li class="page-item {{$day=="wednesday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', ['day'=>'wednesday', 'id'=>$user->username])}}">Miércoles</a>
+                </li>
+                <li class="page-item {{$day=="thursday" ? 'active':''}} ">
+                    <a class="page-link" href="{{route('routine', ['day'=>'thursday', 'id'=>$user->username])}}">Jueves</a>
+                </li>
+                <li class="page-item {{$day=="friday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', ['day'=>'friday', 'id'=>$user->username])}}">Viernes</a>
+                </li>
+                <li class="page-item {{$day=="saturday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', ['day'=>'saturday', 'id'=>$user->username])}}">Sábado</a>
+                </li>
+            </ul>
+        </nav>
+    @else
+        <nav aria-label="Days">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {{$day=="sunday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', 'sunday')}}">Domingo</a>
+                </li>
+                <li class="page-item {{$day=="monday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', 'monday')}}">Lunes</a>
+                </li>
+                <li class="page-item {{$day=="tuesday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', 'tuesday')}}">Martes</a>
+                </li>
+                <li class="page-item {{$day=="wednesday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', 'wednesday')}}">Miércoles</a>
+                </li>
+                <li class="page-item {{$day=="thursday" ? 'active':''}} ">
+                    <a class="page-link" href="{{route('routine', 'thursday')}}">Jueves</a>
+                </li>
+                <li class="page-item {{$day=="friday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', 'friday')}}">Viernes</a>
+                </li>
+                <li class="page-item {{$day=="saturday" ? 'active':''}}">
+                    <a class="page-link" href="{{route('routine', 'saturday')}}">Sábado</a>
+                </li>
+            </ul>
+        </nav>
+    @endif
+
     @foreach ($activities as $activity)
-    <div class="card mx-auto my-3" id="card-{{$activity->id}}" style="width: 25rem;">
-        <div class="card-body" >
-            <h5>{{$activity->name}}</h5>
-            <p>
-                @php
-                    $start = date('g:i a', strtotime($activity->start_hour));
-                    $end = date('g:i a', strtotime($activity->end_hour));
-                @endphp
-                <b>Hora:</b> {{$start}} @isset($activity->end_hour) a {{$end}} @endisset
-                <br>
-                @isset($activity->place)
-                <b>Dónde:</b> {{$activity->place}}
+        @if(!$activity->isPrivate || !isset($user))
+        <div class="card mx-auto my-3" id="card-{{$activity->id}}" style="width: 25rem;">
+            <div class="card-body" >
+                <h5>{{$activity->name}}</h5>
+                <p>
+                    @php
+                        $start = date('g:i a', strtotime($activity->start_hour));
+                        $end = date('g:i a', strtotime($activity->end_hour));
+                    @endphp
+                    <b>Hora:</b> {{$start}} @isset($activity->end_hour) a {{$end}} @endisset
+                    <br>
+                    @isset($activity->place)
+                    <b>Dónde:</b> {{$activity->place}}
+                    @endisset
+                    
+                </p>
+                @isset($user)
+                    <button onclick="importActivity({{$activity->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
+                @else
+                    <button type="button" onclick="deleteCard({{$activity->id}})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+                    <a class="edit_link btn btn-sm btn-outline-secondary" data-toggle="modal" href="#modal_edit"
+                        data-id="{{$activity->id}}"
+                        data-name="{{$activity->name}}"
+                        data-start-hour="{{$activity->start_hour}}"
+                        data-end-hour="{{$activity->end_hour}}"
+                        data-place="{{$activity->place}}">
+                        <i class="fa fa-pen"></i>
+                    </a>
                 @endisset
-                
-            </p>
-            <button type="button" onclick="deleteCard({{$activity->id}})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
-            <a class="edit_link btn btn-sm btn-outline-secondary" data-toggle="modal" href="#modal_edit"
-                data-id="{{$activity->id}}"
-                data-name="{{$activity->name}}"
-                data-start-hour="{{$activity->start_hour}}"
-                data-end-hour="{{$activity->end_hour}}"
-                data-place="{{$activity->place}}">
-                <i class="fa fa-pen"></i>
-            </a>
+            </div>
         </div>
-    </div>
+        @endif
     @endforeach
+    @isset($user)
+    @else
     <button class="btn btn-primary btn-lg fixed-button" data-toggle="modal" data-target="#modal_add">
         <i class="fa fa-plus"></i>
     </button>
+    @endisset
 </div>
 
 <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="addModal" aria-hidden="true">

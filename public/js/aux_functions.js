@@ -168,6 +168,20 @@ function deleteGrade(subjectId, gradeId, percentage){
     }
 }
 
+function importActivity(id){
+    $.ajax({
+        url: "/routine/"+id+"/import",
+        method:"POST",
+        headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+        success: function(result){
+            alert('Actividad importada');
+        },
+        error: function(xhr){
+            console.log("Ocurrió un error:  " + xhr.status);
+        }
+    });
+}
+
 function setTimer(id, end_date){
     var countDownDate = new Date(end_date).getTime();
     var interval = setInterval(function(){

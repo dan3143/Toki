@@ -70,7 +70,7 @@ Route::get('/routine/{day}/{id?}', 'RoutineController@index')->name('routine')->
 Route::post('/routine/{day}', 'RoutineController@store')->name('routine.store')->middleware('auth');
 Route::put('/routine/{day}', 'RoutineController@update')->name('routine.update')->middleware('auth');
 Route::delete('/routine/{id}/delete', 'RoutineController@delete')->name('routine.delete')->middleware('auth');
-Route::post('/routine/{id}/import', 'RoutineController@import')->name('routine.import')->middlware('auth');
+Route::post('/routine/{id}/import', 'RoutineController@import')->name('routine.import')->middleware('auth');
 
 //--------email---------
 Route::get('/email','MailController@basic_email')->name('email.basic_email');

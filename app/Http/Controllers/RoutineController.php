@@ -90,4 +90,17 @@ class RoutineController extends Controller
         return redirect()->route('routine', $day);
     }
 
+    public function import($id){
+        $activity = Activity::findOrFail($id);
+        $imported = new Activity;
+        $imported->userId = Auth::id();
+        $imported->name = $activity->name;
+        $imported->end_hour = $activity->end_hour;
+        $imported->start_hour = $activity->start_hour;
+        $imported->place = $activity->place;
+        $imported->day = $activity->day;
+        $imported->save();
+        return $id . " imported";
+    }
+
 }
