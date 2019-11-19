@@ -6,18 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Deadline;
 use App\Subject;
+use App\User;
 
 class DeadlineController extends Controller
 {
     private $deadlines;
 
-    public function index(Request $request){
+    public function index(Request $request, $id=null){
         return view('deadlines', [
                 'deadlines' => Deadline::where('userId', Auth::id())
                     ->orderBy('end_date', 'asc')
                     ->orderBy('priority', 'desc')
                     ->get(), 
-                'id' => Auth::id()
+                'id' => Auth::id(),
+                'user' => $id==null?null:User::findOrFail($id)
              ]);
     }
 

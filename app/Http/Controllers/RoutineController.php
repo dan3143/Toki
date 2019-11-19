@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -11,14 +12,14 @@ class RoutineController extends Controller
 
     const DAYS =["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
     
-    public function index(Request $request, $day){
+    public function index(Request $request, $day, $id=null){
         if (!in_array($day, self::DAYS)){
             abort(404);
         }
         $activities = Activity::where('userId', Auth::id())->where('day', $day)
                                                            ->orderBy('start_hour', 'asc')
                                                            ->get();
-        return view('routine', ['activities' => $activities, "day" => $day]);
+        return view('routine', ['activities' => $activities, "day" => $day, 'user' => $id==null?null:User::findOrFail($id)]);
     }
 
     public function delete($id){

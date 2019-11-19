@@ -10,8 +10,10 @@ use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-    public function index(Request $request){
-        return view('subjects', ['subjects' => Subject::where('userId', Auth::id())->get()]);
+
+    public function index(Request $request, $id=null)
+    {
+        return view('subjects', ['subjects' => Subject::where('userId', Auth::id())->get(), 'user' => $id==null?null:User::findOrFail($id)]);
     }
 
     public function create(){
