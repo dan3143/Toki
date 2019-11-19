@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-    <div class="card">
+    <div class="card mx-auto">
         <div class="card-header">
             <span class="align-self-center">Tus asignaturas</span>
             <a href="{{ route('subjects.create') }}" class="btn btn-sm btn-primary float-right">
@@ -37,7 +37,7 @@
                             <i class="fa fa-plus"></i>
                         </button>
                     </td>
-                    <td style="text-align:center;">
+                    <td width="15%" style="text-align:center;">
                         <button id="delete-{{$subject->id}}" class="btn btn-sm btn-outline-danger" type="button">
                             <i class="fa fa-trash"></i>
                         </button>

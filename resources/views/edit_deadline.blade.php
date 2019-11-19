@@ -71,6 +71,10 @@
                     <small class="text-danger">Campo requerido</small>
                     @enderror
                 </div>
+                <div class="form-check">
+                    <input  {{$deadline->isPrivate ? 'checked':''}} type="checkbox" class="form-check-input" id="check_private" name="check_private">
+                    <label class="form-check-label" for="check_private">Privada</label>
+                </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Actualizar">
                     <a class="text-danger" style="margin-left: 15px;font-size:15px;" href="{{route('deadlines')}}">Cancelar</a>

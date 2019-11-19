@@ -32,6 +32,7 @@
                     <small class="text-danger">Campo requerido</small>
                     @enderror
                 </div>
+                
                 <div class="form-group">
                     <label for="input_date">Ingresa el nombre del profesor (o profesores)</label>
                     <input type="text" name="input_teacher_name" class="form-control"
@@ -55,6 +56,11 @@
                     @error('input_status')
                     <small class="text-danger">Campo requerido</small>
                     @enderror
+                </div>
+
+                <div class="form-check">
+                    <input  {{$subject->isPrivate ? 'checked':''}} type="checkbox" class="form-check-input" id="check_private" name="check_private">
+                    <label class="form-check-label" for="check_private">Privada</label>
                 </div>
 
                 <div class="form-group">

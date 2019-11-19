@@ -87,7 +87,7 @@
                 @isset($user)
                     <button onclick="importActivity({{$activity->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
                 @else
-                    <button type="button" onclick="deleteCard({{$activity->id}})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+                    <button type="button" onclick="deleteActivity({{$activity->id}})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
                     <a class="edit_link btn btn-sm btn-outline-secondary" data-toggle="modal" href="#modal_edit"
                         data-id="{{$activity->id}}"
                         data-name="{{$activity->name}}"

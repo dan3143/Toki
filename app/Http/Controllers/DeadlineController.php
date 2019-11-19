@@ -40,6 +40,7 @@ class DeadlineController extends Controller
         $deadline->end_hour = $request->input_time;
         $deadline->subjectId = $request->input_subject;
         $deadline->priority = $request->input_priority;
+        $deadline->isPrivate = $request->has('check_private') ? 1 : 0;
         $deadline->save();
         return redirect()->route('deadlines');
     }
@@ -74,6 +75,7 @@ class DeadlineController extends Controller
             $deadline->end_hour = $request->input_time;
             $deadline->subjectId = $request->input_subject;
             $deadline->priority = $request->input_priority;
+            $deadline->isPrivate = $request->has('check_private') ? 1 : 0;
             $deadline->save();
             return redirect()->route('deadlines');
         }

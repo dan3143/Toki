@@ -37,12 +37,16 @@
                         placeholder="Ingresa el nombre del profesor"
                         value="{{old('input_teacher_name')}}">
                 </div>
-
                 <div class="form-group">
                     <label for="input_max_absences">Ingresa el número de fallas máximas</label>
                     <input name="input_max_absences" type="number" class="form-control" value="{{ old('input_max_absences') }}"
                         placeholder="Ingresa el máximo de fallas que puedes tener">
                 </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="check_private" name="check_private">
+                    <label class="form-check-label" for="check_private">Privada</label>
+                </div>
+                <br>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Crear">
                     <a class="text-danger" style="margin-left: 15px;font-size:15px;" href="{{route('subjects')}}">Cancelar</a>

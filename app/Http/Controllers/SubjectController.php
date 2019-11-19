@@ -29,6 +29,7 @@ class SubjectController extends Controller
         $subject->name = $request->input_subject_name;
         $subject->teacherName = $request->input_teacher_name;
         $subject->absenceMax = $request->input_max_absences;
+        $subject->isPrivate = $request->has('check_private') ? 1 : 0;
         $subject->status = "studying";
         $subject->save();
         return redirect()->route('subjects');
@@ -90,6 +91,7 @@ class SubjectController extends Controller
             $subject->teacherName = $request->input_teacher_name;
             $subject->absenceMax = $request->input_max_absences;
             $subject->status = $request->input_status;
+            $subject->isPrivate = $request->has('check_private') ? 1 : 0;
             $subject->save();
             return redirect()->route('subjects');
         }
