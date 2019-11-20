@@ -74,4 +74,4 @@ Route::delete('/routine/{id}/delete', 'RoutineController@delete')->name('routine
 Route::post('/routine/{id}/import', 'RoutineController@import')->name('routine.import')->middleware('auth');
 
 //--------email---------
-Route::get('/email','MailController@basic_email')->name('email.basic_email');
+Route::post('/email','MailController@basic_email')->name('email.basic_email');
