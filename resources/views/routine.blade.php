@@ -70,24 +70,23 @@
     @foreach ($activities as $activity)
         @if(!$activity->isPrivate || !isset($user))
         <div class="card mx-auto my-3" id="card-{{$activity->id}}" style="width: 25rem;">
-            <div class="card-body" >
+            <div class="card-body">
                 <h5>{{$activity->name}}</h5>
                 <p>
                     @php
                         $start = date('g:i a', strtotime($activity->start_hour));
                         $end = date('g:i a', strtotime($activity->end_hour));
                     @endphp
-                    <b>Hora:</b> {{$start}} @isset($activity->end_hour) a {{$end}} @endisset
+                    <b>Hora:</b> <span id="start_hour">{{$start}}</span> @isset($activity->end_hour) a <span id="end_hour">{{$end}}</span> @endisset
                     <br>
                     @isset($activity->place)
                     <b>Dónde:</b> {{$activity->place}}
                     @endisset
-                    
                 </p>
                 @isset($user)
                     <button onclick="importActivity({{$activity->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
                 @else
-                    <button type="button" onclick="deleteActivity({{$activity->id}})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+                    <button type="button" onclick="deleteActivity({{$activity->id}})" class="btn btn-sm btn-outline-danger btn-delete"><i class="fa fa-trash"></i></button>
                     <a class="edit_link btn btn-sm btn-outline-secondary" data-toggle="modal" href="#modal_edit"
                         data-id="{{$activity->id}}"
                         data-name="{{$activity->name}}"
@@ -99,6 +98,27 @@
                 @endisset
             </div>
         </div>
+        <script>
+            start_hour = new Date("{{date('Y-m-d H:i:s', strtotime($activity->start_hour))}}").getTime();
+            end_hour = new Date("{{date('Y-m-d H:i:s', strtotime($activity->end_hour))}}").getTime();
+            now = new Date().getTime();
+            console.log("start_hour: " + start_hour);
+            if (now >= start_hour && now < end_hour){
+                card = $("#card-{{$activity->id}}");
+                
+                //fondo
+                card.css("background-color", "#C2EABD");
+                
+                //texto
+                //card.css("color", "#FFFAFF");
+                
+                //botón editar
+                //$("#card-{{$activity->id}} .edit_link").toggleClass("btn-outline-light btn-outline-secondary");
+                
+                //botón borrar
+                //$("#card-{{$activity->id}} .btn-delete").css("color", "#FC5130");
+            }
+        </script>
         @endif
     @endforeach
     @isset($user)
@@ -266,6 +286,7 @@
     });
 
     $(document).ready(function(){
+
         $("#repeat-section").hide();
         $("#repeat").change(function(){
             if (this.checked){

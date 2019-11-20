@@ -34,6 +34,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @guest
+                        @else
                         <li class="nav-item my-auto">
                             <form method="GET" action="{{route('search')}}">
                                 <input type="text" placeholder="Buscar..." name="search_query">
@@ -42,12 +44,12 @@
                                 </button>
                             </form>
                         </li>
+                        @endguest
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav">
                         <!-- Authentication Links -->
                         @guest
-                        
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Ingresar') }}</a>
                             </li>
