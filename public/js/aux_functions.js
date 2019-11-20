@@ -194,7 +194,7 @@ function notify(){
     $.ajax({
         url: "/email",
         cache: false,
-        type: "GET",
+        type: "POST",
         headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
         success: function(result){
             alert('Notificación enviada');
