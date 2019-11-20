@@ -190,7 +190,21 @@ function importDeadline(id){
         }
     });
 }
+function notify(){
+    $.ajax({
+        url: "/email",
+        cache: false,
+        type: "GET",
+        headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+        success: function(result){
+            alert('Notificación enviada');
+        },
+        error: function(xhr){
+            console.log("Ocurrió un error:  " + xhr.responseText);
+        }
+    });
 
+}
 function setTimer(id, end_date){
     var countDownDate = new Date(end_date).getTime();
     var interval = setInterval(function(){
@@ -211,6 +225,11 @@ function setTimer(id, end_date){
                 }
             }   
         }
+
+        if(minutes == 5 && seconds == 0){
+            notify();
+        }
+
         text = document.getElementById("remaining-"+id);
         if (text == null){
             return;
