@@ -149,6 +149,20 @@ function deleteGrade(subjectId, gradeId, percentage){
     }
 }
 
+function subscribeToSubject(id){
+    $.ajax({
+        url: "/subjects/"+id+"/subscribe",
+        method:"POST",
+        headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+        success: function(result){
+            alert('Estás suscrito a esta asignatura');
+        },
+        error: function(xhr){
+            console.log("Ocurrió un error:  " + xhr.responseText);
+        }
+    });
+}
+
 function importActivity(id){
     $.ajax({
         url: "/routine/"+id+"/import",

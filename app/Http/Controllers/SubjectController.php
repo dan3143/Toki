@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Grade;
 use App\Subject;
 use App\User;
+use App\Deadline;
+use App\Subscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -135,5 +137,37 @@ class SubjectController extends Controller
             "sum" => $grades->sum(DB::raw('value * (percentage/100)')),
             "percentage" => $percentage = (1 - $grades->sum('percentage')/100)
         ]);
+    }
+
+    public function subscribe($id){
+        $providerSubject = Subject::findOrFail($id);
+        $subject = new Subject;
+        $subject->userId = Auth::id();
+        $subject->name = $providerSubject->name;
+        $subject->teacherName = $providerSubject->teacherName;
+        $subject->status = $providerSubject->status;
+        $subject->absenceMax = $providerSubject->absenceMax;
+        $subject->absenceNumber = 0;
+        $subject->save();
+        $deadlines = Deadline::where('subjectId', $id)->where('isPrivate', 0)->get();
+        foreach($deadlines as $deadline){
+            $imported = new Deadline;
+            $imported->userId = Auth::id();
+            $imported->name = $deadline->name;
+            $imported->end_date = $deadline->end_date;
+            $imported->end_hour = $deadline->end_hour;
+            $imported->subjectId = $deadline->subjectId;
+            $imported->priority = $deadline->priority;
+            $imported->isPrivate = $deadline->isPrivate;
+            $imported->save();
+            return $id . " imported";
+        }
+        $subscription = new Subscription;
+        $subscription->providerSubjectId = $id;
+        $subscription->providerId = $providerSubject->userId;
+        $subscription->subscriberId = Auth::id();
+        $subscription->subscriberSubjectId = $subject->id;
+        $subscription->save();
+        return "Subscribed to " . $id;
     }
 }

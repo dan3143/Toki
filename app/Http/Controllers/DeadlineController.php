@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Deadline;
 use App\Subject;
 use App\User;
+use App\Subscription;
 
 class DeadlineController extends Controller
 {
@@ -42,6 +43,18 @@ class DeadlineController extends Controller
         $deadline->priority = $request->input_priority;
         $deadline->isPrivate = $request->has('check_private') ? 1 : 0;
         $deadline->save();
+        $subscriptions = Subscription::where('providerSubjectId', $deadline->subjectId)->get();
+        foreach($subscriptions as $subscription){
+            $newDeadline = new Deadline;
+            $newDeadline->userId = $subscription->subscriberId;
+            $newDeadline->name = $request->input_deadline_name;
+            $newDeadline->end_date = $request->input_date;
+            $newDeadline->end_hour = $request->input_time;
+            $newDeadline->subjectId = $request->subscriberSubjectId;
+            $newDeadline->priority = $request->input_priority;
+            $newDeadline->isPrivate = $request->has('check_private') ? 1 : 0;
+            $newDeadline->save();
+        }
         return redirect()->route('deadlines');
     }
 

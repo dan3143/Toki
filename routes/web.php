@@ -64,7 +64,7 @@ Route::get('/subjects/{id}/edit', 'SubjectController@edit')->name('subjects.edit
 Route::put('/subjects/{id}/update', 'SubjectController@update')->name('subjects.update')->middleware('auth');
 Route::put('/subjects/{id}/increment', 'SubjectController@increment')->name('subjects.increment')->middleware('auth');
 Route::put('/subjects/{id}/decrement', 'SubjectController@decrement')->name('subjects.decrement')->middleware('auth');
-Route::post('/subjects/{id}/import', 'SubjectController@import')->name('subjects.import')->middleware('auth');
+Route::post('/subjects/{id}/subscribe', 'SubjectController@subscribe')->name('subjects.subscribe')->middleware('auth');
 
 //--------Routine------
 Route::get('/routine/{day}/{id?}', 'RoutineController@index')->name('routine')->middleware('auth');

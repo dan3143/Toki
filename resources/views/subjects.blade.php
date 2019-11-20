@@ -1,4 +1,5 @@
 @php
+    use Illuminate\Support\Facades\Auth;
     if (isset($user)){
         $subjects = App\Subject::where('userId', $user->username)->get();
     }
@@ -7,7 +8,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Asignaturas
+    Asignaturas @isset($user) de {{$user->username}} @endisset
 @endsection
 
 @section('content')
@@ -33,12 +34,12 @@
                     </button>
                 </div>
                 @endisset
-                <div class="col-1 text-center">
+                <div class="col-2 text-center">
                     @isset($user)
-                    <button onclick="importSubject({{$subject->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
+                    <button onclick="subscribeToSubject({{$subject->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
                     @else
                     <div class="dropdown">
-                        <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-outline-secondary btn-sm"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

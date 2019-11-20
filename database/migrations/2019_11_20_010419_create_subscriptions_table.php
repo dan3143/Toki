@@ -17,8 +17,21 @@ class CreateSubscriptionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('providerId');
             $table->string('subscriberId');
-            $table->bigInteger('subjectId');
+            $table->bigInteger('providerSubjectId')->unsigned();
+            $table->bigInteger('subscriberSubjectId')->unsigned();
             $table->timestamps();
+            $table->foreign('providerSubjectId')
+                  ->references('id')->on('subjects')
+                  ->onDelete('cascade'); 
+            $table->foreign('subscriberSubjectId')
+                  ->references('id')->on('subjects')
+                  ->onDelete('cascade'); 
+            $table->foreign('providerId')
+                  ->references('username')->on('users')
+                  ->onDelete('cascade'); 
+            $table->foreign('subscriberId')
+                  ->references('username')->on('users')
+                  ->onDelete('cascade'); 
         });
     }
 
