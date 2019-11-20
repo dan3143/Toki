@@ -59,6 +59,11 @@ $user = Auth::user();
                 </div>
 
                 <div class="row justify-content-center my-3 form-group">
+                    <div class="col-2 my-auto text-rig">Descripción:</div>
+                    <div class="col-4"><textarea name="description" placeholder="Escribe algo sobre ti..." class="form-control">{{$user->description}}</textarea></div>
+                </div>
+
+                <div class="row justify-content-center my-3 form-group">
                     <div class="col-2 my-auto text-right">Correo:</div>
                     <div class="col-4"><input name="email" type="email" class="form-control" value="{{$user->email}}"></div>
                 </div>

@@ -35,8 +35,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item my-auto">
-                            <form method="GET">
-                                <input type="text" placeholder="Buscar..." name="search">
+                            <form method="GET" action="{{route('search')}}">
+                                <input type="text" placeholder="Buscar..." name="search_query">
                                 <button type="submit" class="btn btn-secondary">
                                     <i class="fa fa-search"></i>
                                 </button>
@@ -71,6 +71,8 @@
                                     <img class="rounded-circle" src="/storage/avatars/{{Auth::user()->profile_picture}}" width="30" height="30" alt="{{ Auth::user()->name}}">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('profile', Auth::id()) }}" class="dropdown-item">Usuario: <b>{{Auth::user()->username}}</b></a>
+                                    <div class="dropdown-divider"></div>
                                     <a href="{{ route('schedule') }}" class="dropdown-item">Horario</a>
                                     <a href="{{ route('deadlines') }}" class="dropdown-item">Tareas</a>
                                     <a href="{{ route('routine', ['day'=>'monday']) }}" class="dropdown-item">Rutina</a>

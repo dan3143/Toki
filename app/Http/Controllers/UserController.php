@@ -40,6 +40,7 @@ class UserController extends Controller
         }
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->description = $request->description;
         $user->save();
         return back();
     }

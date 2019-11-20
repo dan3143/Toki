@@ -12,17 +12,23 @@
 
 @section('content')
 <div class="container">
+    @isset($user)
+        <h1 class="text-center mb-4">Tareas de {{$user->username}}</h1>
+    @endisset
     <ul class="list-group w-75 mx-auto">
-        @foreach($deadlines as $deadline)    
+        @foreach($deadlines as $deadline)
         <li class="list-group-item" id="deadline-{{$deadline->id}}">
-            <div class="row">
-                <div class="col-4">{{$deadline->name}}</div>
+            <div class="row"> 
+                <div class="col-4">
+                    {{$deadline->name}}
+                </div>
                 <div class="col">
                     @isset($deadline->subjectId)
                     {{App\Subject::where('id', $deadline->subjectId)->first()->name}}
                     @endisset
                 </div>
                 <div class="col" id="remaining-{{$deadline->id}}"></div>
+                <div class="col">{{date('d/m/Y', strtotime($deadline->end_hour))}}</div>
                 <div class="col">
                     @isset($deadline->subject)
                     {{$deadline->subject}}
@@ -30,7 +36,7 @@
                 </div>
                 <div class="col-1 text-center">
                 @isset($user)
-                <button onclick="importDeadline({{$deadline->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
+                    <button onclick="importDeadline({{$deadline->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
                 @else
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

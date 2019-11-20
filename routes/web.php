@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/schedule', 'ScheduleController@index')->name('schedule')->middleware('auth');
+Route::get('/search', 'SearchController@index')->name('search');
 
 //------- User --------
 Route::get('/user', 'UserController@index')->name('user')->middleware('auth');
