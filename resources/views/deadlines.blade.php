@@ -12,53 +12,88 @@
 
 @section('content')
 <div class="container">
-    @isset($user)
-        <h1 class="text-center mb-4">Tareas de {{$user->username}}</h1>
-    @endisset
-    <ul class="list-group w-75 mx-auto">
-        @foreach($deadlines as $deadline)
-        <li class="list-group-item" id="deadline-{{$deadline->id}}">
-            <div class="row"> 
-                <div class="col-4">
-                    {{$deadline->name}}
-                </div>
-                <div class="col">
-                    @isset($deadline->subjectId)
-                    {{App\Subject::where('id', $deadline->subjectId)->first()->name}}
-                    @endisset
-                </div>
-                <div class="col" id="remaining-{{$deadline->id}}"></div>
-                <div class="col">{{date('d/m/Y', strtotime($deadline->end_hour))}}</div>
-                <div class="col">
-                    @isset($deadline->subject)
-                    {{$deadline->subject}}
-                    @endisset
-                </div>
-                <div class="col-1 text-center">
-                @isset($user)
-                    <button onclick="importDeadline({{$deadline->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
-                @else
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-ellipsis-v"></i>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item text-danger" href="#" onclick="deleteDeadline({{$deadline->id}})"><i class="fa fa-trash"></i> Eliminar</a>                
-                        <a class="dropdown-item text-dark" href="{{ route('deadlines.edit', $deadline->id) }}"><i class="fa fa-pen"></i> Editar</a>
-                    </div>
-                </div>                
-                @endisset
-                </div>
-                <script>setTimer("{{$deadline->id}}", "{{$deadline->end_date}} {{$deadline->end_hour}}");</script>
-            </div>     
-        </li>
-        @endforeach
-    </ul>
-    @isset($user)
-    @else
-    <a href="{{ route('deadlines.create') }}" class="btn btn-primary fixed-button">
-        <i class="fa fa-plus"></i>
-    </a>
-    @endisset
+    <div class="card">
+        <div class="card-header">
+            <span class ="align-self-center" >Tus tareas</span>
+            @isset($user)
+            @else
+            <a href="{{ route('deadlines.create') }}" class="btn btn-sm btn-primary float-right">
+                Nueva tarea
+            </a>
+            @endisset
+            <div class="custom-control custom-switch float-right mr-4">
+                <input type="checkbox" class="custom-control-input" id="show_dates">
+                <label class="custom-control-label" for="show_dates">Mostrar fechas</label>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead >
+                    <tr>
+                        <th>Nombre</th>
+                        <th style="text-align:center;">Asignatura</th>
+                        <th style="text-align:center;">Fecha límite</th>
+                        <th style="text-align:center;">Hora</th>
+                        <th style="text-align:center;">Prioridad</th>
+                        <th style="text-align:center;">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($deadlines as $deadline)
+                <tr id="deadline-{{$deadline->id}}">
+                    <td id="name-{{$deadline->id}}"> {{ $deadline->name }} </td>
+                    <td class="text-center"> 
+                        {{ $deadline->subjectId == null ? '--' : App\Subject::where('id', $deadline->subjectId)->first()->name }}
+                    </td>
+                    <td style="text-align:center;">
+                        <span id="end_date" class="date">{{ date('d/m/Y', strtotime($deadline->end_date))}}</span>
+                        <span class="parenthesis">(</span>
+                        <span id="remaining-{{$deadline->id}}"></span>
+                        <span class="parenthesis">)</span>
+                        <script>setTimer("{{$deadline->id}}", "{{$deadline->end_date}} {{$deadline->end_hour}}");</script>
+                     </td>
+                    <td style="text-align:center;"> {{ date('h:i a', strtotime($deadline->end_hour))}}</td>
+                    <td style="text-align:center;"> {{ $deadline->priority == 'low' ? 'Baja' :
+                                                      ($deadline->priority == 'medium' ? 'Medianas' : 
+                                                      ($deadline->priority == 'high' ? 'Alta' : '--'))}} </td>
+                    <td width="10%" style="text-align:center;">
+                        @isset($user)
+                        <button onclick="importDeadline({{$deadline->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
+                        @else
+                        <button onclick="deleteDeadline({{$deadline->id}})" class="btn btn-sm btn-outline-danger" type="button">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        <a class="btn btn-sm btn-outline-secondary" type="a" href="{{ route('deadlines.edit', $deadline->id) }}">
+                            <i class="fa fa-pen"></i>
+                        </a>
+                        @endisset
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>  
+            </table>
+        </div>
+    </div>
 </div>
+<script>
+$(document).ready(function(){
+    if($("#show_dates").prop("checked")){
+        $(".date").show();
+        $(".parenthesis").show();
+    }else{
+        $(".date").hide();
+        $(".parenthesis").hide();
+    }
+    $("#show_dates").click(function(){
+      console.log("hi");
+      if($("#show_dates").prop("checked")){
+          $(".date").show();
+          $(".parenthesis").show();
+      }else{
+          $(".date").hide();
+          $(".parenthesis").hide();
+      }
+  });
+});
+</script>
 @endsection

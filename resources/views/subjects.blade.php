@@ -1,64 +1,59 @@
-@php
-    use Illuminate\Support\Facades\Auth;
-    if (isset($user)){
-        $subjects = App\Subject::where('userId', $user->username)->get();
-    }
-@endphp
-
 @extends('layouts.app')
 
 @section('title')
-    Asignaturas @isset($user) de {{$user->username}} @endisset
+    Asignaturas
 @endsection
 
 @section('content')
 <div class="container">
-    @isset($user)
-        <h1 class="text-center mb-4">Asignaturas de {{$user->username}}</h1>
-    @endisset
-    <ul class="list-group w-75 mx-auto">
-        @foreach($subjects as $subject)    
-        <li class="list-group-item" id="subject-{{$subject->id}}">
-            <div class="row">
-                <div class="col-4">{{$subject->name}}</div>
-                <div class="col">{{$subject->teacherName}} </div>
-                @isset($user)
-                @else
-                <div class="col">
-                    <button  class="btn btn-xs btn-outline-secondary" onclick="decrement({{$subject->id}})">
-                        <i class="fa fa-minus"></i>
-                    </button>
-                    <span id="absenceNumber-{{$subject->id}}">{{$subject->absenceNumber}}</span>@isset($subject->absenceMax)/{{$subject->absenceMax}}@endisset
-                    <button class="btn btn-xs btn-outline-secondary" onclick=" increment( {{$subject->id}})">
-                        <i class="fa fa-plus"></i>
-                    </button>
-                </div>
-                @endisset
-                <div class="col-2 text-center">
-                    @isset($user)
-                    <button onclick="subscribeToSubject({{$subject->id}})" type="button" class="btn btn-sm btn-outline-secondary"><i class="fa fa-calendar-plus"></i></button>    
-                    @else
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary btn-sm"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v"></i>
+    <div class="card mx-auto">
+        <div class="card-header">
+            <span class="align-self-center">Tus asignaturas</span>
+            <a href="{{ route('subjects.create') }}" class="btn btn-sm btn-primary float-right">
+                Nueva asignatura
+            </a>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Profesor</th>
+                        <th style="text-align:center;">Inasistencias</th>
+                        <th style="text-align:center;">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($subjects as $subject)
+                <tr id="row-{{$subject->id}}">
+                    <td> {{$subject->name}} </td>
+                    <td> {{$subject->teacherName}} </td>
+                    <td width="15%" style="text-align:center;"> 
+                        <button onclick="decrement({{$subject->id}})" class="btn btn-xs btn-outline-secondary" type="button">
+                            <i class="fa fa-minus"></i>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item text-danger" href="#" onclick="deleteSubject({{$subject->id}})"><i class="fa fa-trash"></i> Eliminar</a>                
-                            <a class="dropdown-item text-dark" href="{{ route('subjects.edit', $subject->id) }}"><i class="fa fa-pen"></i> Editar</a>
-                            <a class="dropdown-item text-dark" href="{{ route('subjects.show', $subject->id) }}"><i class="fa fa-info-circle"></i> Detalles</a>
-                        </div>
-                    </div>                
-                    @endisset
-                </div>
-            </div>     
-        </li>
-        @endforeach
-    </ul>
-    @isset($user)
-    @else
-    <a href="{{ route('subjects.create') }}" class="btn btn-primary fixed-button">
-        <i class="fa fa-plus"></i>
-    </a>
-    @endisset
+                        <span id="absenceNumber-{{$subject->id}}">{{$subject->absenceNumber}}</span>@isset($subject->absenceMax)/{{$subject->absenceMax}}@endisset
+                        <button onclick="increment({{$subject->id}})" class="btn btn-xs btn-outline-secondary" type="button">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </td>
+                    <td style="text-align:center;">
+                        <button onclick="deleteSubject({{$subject->id}})" class="btn btn-sm btn-outline-danger" type="button">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        <a class="btn btn-sm btn-outline-secondary" type="a" href="{{ route('subjects.edit', $subject->id) }}">
+                            <i class="fa fa-pen"></i>
+                        </a>
+                        <a class="btn btn-sm btn-outline-info" type="a" href="{{ route('subjects.show', $subject->id) }}">
+                            <i class="fa fa-info"></i>
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+                </tbody>  
+            </table>
+        </div>
+    </div>
 </div>
+
 @endsection
