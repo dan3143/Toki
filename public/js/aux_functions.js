@@ -197,7 +197,7 @@ function notify(){
         type: "POST",
         headers: {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
         success: function(result){
-            alert('Notificación enviada');
+            console.log('Notificación enviada');
         },
         error: function(xhr){
             console.log("Ocurrió un error:  " + xhr.responseText);

@@ -13,8 +13,8 @@ class MailController extends Controller {
       $user = Auth::user();
       $to = $user ->email;
       $name = $user->name;
-      mail($to,"¡Hola $name!","Esto es una prueba o(≧▽≦)o",$headers);
-      return redirect()->route('user');;
+      mail($to,"¡Hola $name!","Tu tarea ha expirado!. Pásate por Toki ;)",$headers);
+      return redirect()->route('deadlines');
    }
    
 }

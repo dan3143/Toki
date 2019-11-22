@@ -36,6 +36,9 @@
                     <ul class="navbar-nav mr-auto">
                         @guest
                         @else
+                        
+                        <img src="/toki.png" width=10% height=10%>
+                        
                         <li class="nav-item my-auto">
                             <form method="GET" action="{{route('search')}}">
                                 <input type="text" placeholder="Buscar..." name="search_query">
